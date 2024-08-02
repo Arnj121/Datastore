@@ -1,0 +1,43 @@
+#display-collection{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    background-color: white;
+    border-radius: 5px;
+    border-width: thin;
+    box-shadow: 2px 2px 5px #c0c0bf;
+    border-style: solid;
+    z-index: 4;
+    max-width: 400px;
+    border-color: #d1d1d0;
+}
+#collect-var{
+    display: flex;
+    flex-wrap: wrap;
+}
+.collect-var{
+    background-color: whitesmoke;
+    border-radius: 40px;
+    padding: 5px 30px 5px 10px;
+    margin: 10px;
+}
+
+#add-confirm{
+    margin: 10px;
+    text-align: center;
+}
+#cancel-confirm {
+    margin: 10px;
+    text-align: center;
+}
+
+#add-confirm:hover{
+    cursor: pointer;
+}
+.collect-var:hover{
+    cursor: pointer;
+}

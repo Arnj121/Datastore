@@ -1,0 +1,13 @@
+#list-view-header{
+    width: 800px;
+    display: grid;
+    height: 30px;
+    visibility: hidden;
+    margin: 20px 0 0 40px;
+    border-style: solid;
+    border-color: #d1d1d0;
+    border-width: 0 0 thin 0;
+    grid-template-rows: 100%;
+    color: #fa0700;
+    grid-template-columns: 30% 30% 20% 20%;
+}

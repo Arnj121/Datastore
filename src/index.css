@@ -1,0 +1,9 @@
+progress::-webkit-progress-bar{
+    background: whitesmoke;
+}
+progress::-webkit-progress-value{
+    background: #ff383c;
+}
+input[type=text]{
+    outline: none;
+}

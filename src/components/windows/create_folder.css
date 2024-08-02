@@ -1,0 +1,55 @@
+#create-folder-window{
+    visibility: hidden;
+}
+.input-text{
+    border-width: 0 0 thin 0;
+    padding-left: 10px;
+    border-style: solid;
+    background-color: whitesmoke;
+    height: 30px;
+    width: 200px;
+    margin: auto;
+}
+#folder-name{
+    grid-area: 1/1/1/span 2;
+}
+.confirm-keys{
+    border-color: #d1d1d0;
+    border-width: thin;
+    border-style: solid;
+    margin: auto;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+.confirm-keys:hover{
+    cursor: pointer;
+}
+#create-folder-confirm{
+    grid-area: 2/1/2/2;
+}
+#cancel-folder-confirm{
+    grid-area: 2/2/2/2;
+}
+#create-folder-confirm:hover{
+    cursor: pointer;
+}
+#cancel-folder-confirm:hover{
+    cursor: pointer;
+}
+.create-windows{
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    width: 300px;
+    height: 150px;
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 50% 50%;
+    visibility: visible;
+    z-index: 4;
+    border-width: thin;
+    background-color: whitesmoke;
+    border-style: hidden;
+    border-radius: 5px;
+    border-color: #d1d1d0;
+}

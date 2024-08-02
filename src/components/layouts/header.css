@@ -1,0 +1,136 @@
+body{
+    font-family: 'Open Sans',sans-serif;
+    margin: 0;
+}
+#header{
+    height: 70px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-width: 0 0 thin 0;
+    border-color: #d5d7d0;
+    border-style: solid;
+}
+#search-div{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    min-width: 400px;
+    margin: 0 0 0 10px;
+}
+#search{
+    border-width: 0;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    margin-top: 10px;
+    width: 100%;
+    padding-left: 10px;
+}
+#search:focus{
+    box-shadow: 1px 1px 2px #c0c0bf;
+
+}
+#search-results{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    visibility: visible;
+    background-color:whitesmoke;
+    border-width: 0;
+    margin: -5px 0 0 0;
+    padding: 0 10px 3px 3px;
+    z-index: 4;
+    font-size: small;
+    width: 100%;
+    border-radius:5px;
+}
+#search-results label{
+    margin: 2px;
+    padding: 10px;
+    border-radius: 5px;
+
+}
+#search-results label:hover{
+    cursor: pointer;
+    background-color: white;
+}
+.results{
+    text-overflow:ellipsis;
+    overflow: hidden;
+    padding: 5px;
+    white-space: nowrap;
+}
+#search-options{
+    position: relative;
+    top: 20px;
+    left: -20px;
+}
+#search-options:hover{
+    cursor: pointer;
+}
+#space-used{
+    display: flex;
+    flex-direction: column;
+    margin: auto 30px;
+    min-width: 200px;
+}
+#space-progress{
+    width: 95%;
+    background: #ff383c;
+    height: 6px;
+}
+#side-options{
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+}
+#side-options i:hover{
+    cursor: pointer;
+}
+#side-options div label{
+    font-size: small;
+}
+#settings{
+    position: fixed;
+    border-width: thin;
+    z-index: 4;
+    background-color: white;
+    right: 20px;
+    top: 40px;
+    border-style: solid;
+    border-color: #d1d1d0;
+    border-radius: 5px;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+}
+#settings label{
+    padding: 10px;
+}
+#settings label:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+@keyframes show-search-options {
+    from{
+        max-height: 0;
+        padding: 0 5px 0 5px;;
+    }
+    to{
+        max-height: 200px;
+        padding: 1px 5px 5px 5px;;
+    }
+}
+@keyframes hide-search-options {
+    from{
+        max-height: 200px;
+        padding: 1px 5px 5px 5px;;
+    }
+    to{
+        max-height: 0;
+        padding: 0 5px 0 5px;;
+    }
+}

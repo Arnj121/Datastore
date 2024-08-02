@@ -1,0 +1,24 @@
+.links{
+    margin: 13px 0 0 10px;
+    color: #4A148C;
+}
+.links:hover{
+    cursor: pointer;
+}
+.arrow{
+    margin: 15px 0 0 15px;
+    color: #252524;
+}
+#nav-display{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    color: #4A148C;
+    width: 99%;
+    justify-content: left;
+    border-width: 0 0 thin 0;
+    border-style: solid;
+    padding-left: 10px;
+    margin: auto;
+    border-color: #d1d1d0;
+}

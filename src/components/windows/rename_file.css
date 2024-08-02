@@ -1,0 +1,37 @@
+#renamefile-window{
+    visibility: hidden;
+}
+
+#newfilename{
+    grid-area: 1/1/1/span 2;
+}
+#rename-confirm{
+    grid-area: 2/1/2/2;
+}
+#rename-cancel{
+    grid-area: 2/2/2/2;
+}
+#rename-confirm:hover{
+    cursor: pointer;
+}
+
+#rename-cancel:hover{
+    cursor: pointer;
+}
+.create-windows{
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    width: 300px;
+    height: 150px;
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 50% 50%;
+    visibility: visible;
+    z-index: 4;
+    border-width: thin;
+    background-color: whitesmoke;
+    border-style: hidden;
+    border-radius: 5px;
+    border-color: #d1d1d0;
+}

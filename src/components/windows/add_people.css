@@ -1,0 +1,80 @@
+#add-people-window{
+    border-width: thin;
+    box-shadow: 2px 2px 5px #c0c0bf;
+    border-style: solid;
+    border-color: #d1d1d0;
+    border-radius: 5px;
+    display: grid;
+    grid-template-rows: 30% 10% 40% 20%;
+    grid-template-columns: 30% 40% 20% 10%;
+    visibility: hidden;
+    z-index: 4;
+    background-color: white;
+    width: 400px;height: 300px;
+    position: fixed;
+    top: 30%;
+    left: 35%;
+}
+
+#add-email-input{
+    grid-area: 1/1/1/3;
+    margin: auto;
+    border-width: thin;
+    border-style: solid;
+    border-color: #d1d1d0;
+    border-radius: 5px;
+    height: 30px;
+    padding-left: 5px;
+    width: 80%;
+    outline: none;
+}
+#add-plus{
+    grid-area: 1/3/1/4;
+    height: 30px;
+    margin: auto;
+    width: 80%;
+    text-align: center;
+    color: #d1d1d0;
+}
+#add-plus:hover{
+    cursor: pointer;
+}
+#people-added-lbl{
+    grid-area: 2/1/2/2;
+    margin: auto;
+}
+#people-added{
+    grid-area: 3/1/3/span 4;
+    margin: auto;
+    border-width: thin 0;
+    border-style: solid;
+    border-color: #d1d1d0;
+    border-radius: 5px;
+    height: 90%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.people-added-var{
+    margin: 10px;
+    background-color: whitesmoke;
+    border-radius: 100px;
+    padding: 5px 15px 5px 10px;
+    height: 20px;
+    border-color: #d1d1d0;
+    border-width: thin;
+}
+.people-added-var:hover{
+    cursor: pointer;
+}
+#add-people-confirm{
+    grid-area: 4/1/4/2;
+    margin: auto;
+}
+#remove-people{
+    grid-area: 4/2/4/3;
+    margin: auto;
+}
+#add-people-cancel{
+    grid-area: 4/3/4/span 2;
+}

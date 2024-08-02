@@ -1,0 +1,88 @@
+#menu{
+    width: 250px;
+    min-width: 200px;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 5px;
+    border-width: 0 thin 0 0;
+    border-color: #d1d1d0;
+}
+.sidelines {
+    margin:0;
+    padding: 10px 20px 10px 30px;
+    color:#4A148C;
+}
+.sidelines:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+#add-new{
+    border-radius: 5px;
+    text-align: center;
+    width: 100px;
+    position: relative;
+    margin: 10px 0 5px 25px;
+    padding: 5px 10px 5px 10px;
+    background-color: white;
+    border-color: #4A148C;
+    border-style: solid;
+    border-width: thin;
+}
+#add-new:hover{
+    background-color: white;
+}
+#add-new-child{
+    position: absolute;
+    z-index: 3;
+    top: 100px;
+    left: 120px;
+    visibility: hidden;
+    box-shadow: 1px 1px 1px #c0c0bf;
+    display: flex;
+    background-color: white;
+    flex-direction: column;
+    border-width: thin;
+    border-color: #d1d1d0;
+    border-style: solid;
+    border-radius: 5px;
+}
+#add-new-child label{
+    margin: 0;
+    padding: 10px 30px 10px 20px;
+}
+#add-new-child label:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+#collection-list{
+    display: none;
+    margin-bottom: 20px;
+}
+#usercollec{
+    display: flex;
+    flex-direction: column;
+}
+#addnewcoll{
+    padding: 5px 40px 5px 20px;
+    border-style: solid;
+    border-width: thin 0 0 0;
+    border-color: #d1d1d0;
+}
+#addnewcoll:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+.col-listitems{
+    margin: 5px 0 5px 30px;
+    padding: 5px 40px 5px 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 120px;
+    text-overflow: ellipsis;
+}
+.col-listitems:hover{
+    background-color: whitesmoke;
+    cursor:  pointer;
+}

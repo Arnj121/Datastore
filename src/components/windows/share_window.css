@@ -1,0 +1,62 @@
+#share-window{
+    border-width: thin;
+    border-color: #d1d1d0;
+    border-radius: 5px;
+    border-style: solid;
+    visibility: hidden;
+    display: grid;
+    width: 500px;
+    height: 300px;
+    position: fixed;
+    top: 30%;
+    left: 30%;
+    background-color: white;
+    z-index: 4;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 25% 25% 25% 25%;
+    box-shadow: 2px 2px 5px #c0c0bf;
+}
+#share-info{
+    grid-area: 1/1/1 /span 3;
+    margin: auto;
+}
+#public-private-lbl{
+    grid-area: 2/1/2/2;
+    margin: auto
+}
+#public-private-select{
+    grid-area: 2/2/2/3;
+    margin: auto;
+    border-color: #d1d1d0;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    padding-left: 5px;
+    outline: none;
+}
+#share-with{
+    grid-area: 3/1/3/2;
+    margin: auto;
+}
+#private-person-input{
+    grid-area: 3/2/3/3;
+    margin: auto;
+    border-radius: 5px;
+    border-color: #d1d1d0;
+    height: 30px;
+    width: 150px;
+    outline: none;
+    border-width: thin;
+    border-style: solid;
+    padding-left: 5px;
+}
+#add-from-share{
+    grid-area: 3/3/3/3;
+    margin: auto;
+}
+#share-ok{
+    grid-area: 4/1/4/2;
+}
+#share-cancel{
+    grid-area: 4/3/4/3;
+}

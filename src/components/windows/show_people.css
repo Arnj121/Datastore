@@ -1,0 +1,39 @@
+#show-added-people-window{
+    border-width: thin;
+    box-shadow: 2px 2px 5px #c0c0bf;
+    border-style: solid;
+    border-color: #d1d1d0;
+    border-radius: 5px;
+    display: grid;
+    grid-template-rows: 70% 30%;
+    grid-template-columns: 33% 33% 33%;
+    visibility: hidden;
+    z-index: 4;
+    background-color: white;
+    width: 500px;height: 350px;
+    position: fixed;
+    top: 30%;
+    left: 35%;
+}
+#people-added-window{
+    border-width: 0 0 thin 0;
+    border-style: solid;
+    border-color: #d1d1d0;
+    border-radius: 5px;
+    height: 100%;
+    width: 500px;
+    padding-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    grid-area: 1/1/1/span 3;
+}
+
+#add-more{
+    grid-area: 2/1/2/2;
+}
+#remove-more{
+    grid-area: 2/2/2/3;
+}
+#show-added-people-window-close{
+    grid-area: 2/3/2/3;
+}
