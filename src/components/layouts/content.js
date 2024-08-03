@@ -1,9 +1,11 @@
 import React from "react";
 import './content.css'
 
-function Content(){
+function Content(props){
     return(
-        <div id="container-lvl2"></div>
+        <div id="container-lvl2">
+            {props.data.data}
+        </div>
     )
 }
 export default Content

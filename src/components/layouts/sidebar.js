@@ -1,7 +1,16 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './sidebar.css'
 function Sidebar(props){
 
+    const [curmenu,setCurmenu] = useState('my-home')
+
+
+    function initmenu() {
+        document.getElementById(curmenu).style.backgroundColor='whitesmoke'
+        document.getElementById(curmenu).style.color='#FFAB00'
+    }
+
+    useEffect(initmenu)
     return(
         <div id="menu">
             <label id="add-new" className="sidelines">

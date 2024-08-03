@@ -7,7 +7,6 @@
     display: grid;
     grid-template-rows: 30% 10% 40% 20%;
     grid-template-columns: 30% 40% 20% 10%;
-    visibility: hidden;
     z-index: 4;
     background-color: white;
     width: 400px;height: 300px;
@@ -77,4 +76,7 @@
 }
 #add-people-cancel{
     grid-area: 4/3/4/span 2;
+}
+#add-people-confirm:hover,#add-people-cancel:hover,#remove-people:hover{
+    cursor: pointer;
 }

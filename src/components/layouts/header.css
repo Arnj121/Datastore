@@ -92,28 +92,7 @@ body{
 #side-options div label{
     font-size: small;
 }
-#settings{
-    position: fixed;
-    border-width: thin;
-    z-index: 4;
-    background-color: white;
-    right: 20px;
-    top: 40px;
-    border-style: solid;
-    border-color: #d1d1d0;
-    border-radius: 5px;
-    visibility: hidden;
-    display: flex;
-    flex-direction: column;
-    width: 150px;
-}
-#settings label{
-    padding: 10px;
-}
-#settings label:hover{
-    cursor: pointer;
-    background-color: whitesmoke;
-}
+
 @keyframes show-search-options {
     from{
         max-height: 0;
@@ -133,4 +112,7 @@ body{
         max-height: 0;
         padding: 0 5px 0 5px;;
     }
+}
+#space-info:hover{
+    cursor: pointer;
 }

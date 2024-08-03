@@ -1,12 +1,12 @@
 import React from "react";
-import 'about.css'
+import './about.css'
 function About(props){
 
     return(
         <div id="about-window">
             <div id="about-heading">
                 <label style={{color:"#4A148C"}}>About</label>
-                <label className="textborder" id="close-about-window">close</label>
+                <label className="textborder" id="close-about-window" onClick={()=>{props.data.setAbout(!props.data.about)}}>close</label>
             </div>
             <div id="about-content">
                 <div id="about-home">

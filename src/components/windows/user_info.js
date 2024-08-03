@@ -1,11 +1,11 @@
 import React from "react";
-
+import './user_info.css'
 function UserInfo(props){
 
     return(
         <div id="userinfo-window">
             <div id="userdp"><i className="fal fa-user fa-3x" style={{color:"#424242"}}></i></div>
-            <label id="username" style={{fontWeight: "bold"}}></label>
+            <label id="username" style={{fontWeight: "bold"}}>{props.data.name}</label>
             <label id="change-username" className="textborder">
                 <i className="fal fa-user-edit" style={{marginRight: "10px"}}></i>
                 name
@@ -22,7 +22,7 @@ function UserInfo(props){
                 <i id="the-eye" className="fal fa-eye-slash" style={{marginRight: "10px"}}></i>
                 password
             </label>
-            <label id="password"></label>
+            <label id="password">{props.data.password}</label>
         </div>
     )
 }

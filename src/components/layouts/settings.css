@@ -1,0 +1,21 @@
+#settings{
+    position: fixed;
+    border-width: thin;
+    z-index: 4;
+    background-color: white;
+    right: 20px;
+    top: 40px;
+    border-style: solid;
+    border-color: #d1d1d0;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+}
+#settings label{
+    padding: 10px;
+}
+#settings label:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+}

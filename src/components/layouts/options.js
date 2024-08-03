@@ -1,7 +1,91 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './options.css'
 
-function Options(){
+function Options(props){
+
+    const [view,setView]=useState(false)
+
+    useEffect(()=>{},[view])
+
+    useEffect(()=> {
+        document.getElementById('image-filter').onclick = () => {
+            if (!props.data.imgfilter) {
+                props.data.setimgFilter(a=> !a)
+                console.log(props.data.imgfilter)
+                document.getElementById('image-filter').style.backgroundColor = 'black'
+                document.getElementById('image-notch').style.color = '#FFA615'
+                document.getElementById('image-filter').style.color = 'white'
+                // props.data.reload()
+            } else {
+                props.data.setimgFilter(a=>!a)
+                document.getElementById('image-filter').style.backgroundColor = 'whitesmoke'
+                document.getElementById('image-notch').style.color = '#FF4081'
+                document.getElementById('image-filter').style.color = '#4A148C'
+                // props.data.reload()
+            }
+        }
+        document.getElementById('file-filter').onclick = () => {
+            if (!props.data.filefilter) {
+                props.data.setfileFilter(a=>!a)
+                document.getElementById('file-filter').style.backgroundColor = 'black'
+                document.getElementById('file-notch').style.color = '#FFA615'
+                document.getElementById('file-filter').style.color = 'white'
+                // props.data.reload()
+            } else {
+                props.data.setfileFilter(a=>!a)
+                document.getElementById('file-filter').style.backgroundColor = 'whitesmoke'
+                document.getElementById('file-notch').style.color = '#FF4081'
+                document.getElementById('file-filter').style.color = '#4A148C'
+                // props.data.reload()
+            }
+        }
+        document.getElementById('folder-filter').onclick = () => {
+            if (!props.data.folderfilter) {
+                props.data.setfolderFilter(a=>!a)
+                document.getElementById('folder-filter').style.backgroundColor = 'black'
+                document.getElementById('folder-notch').style.color = '#FFA615'
+                document.getElementById('folder-filter').style.color = 'white'
+                // props.data.reload()
+            } else {
+                props.data.setfolderFilter(a=>!a)
+                document.getElementById('folder-filter').style.backgroundColor = 'whitesmoke'
+                document.getElementById('folder-notch').style.color = '#FF4081'
+                document.getElementById('folder-filter').style.color = '#4A148C'
+                // props.data.reload()
+            }
+        }
+
+        document.getElementById('video-filter').onclick = () => {
+            if (!props.data.videofilter) {
+                props.data.setvideoFilter(a=>!a)
+                document.getElementById('video-filter').style.backgroundColor = 'black'
+                document.getElementById('video-notch').style.color = '#FFA615'
+                document.getElementById('video-filter').style.color = 'white'
+                // props.data.reload()
+            } else {
+                props.data.setvideoFilter(a=>!a)
+                document.getElementById('video-filter').style.backgroundColor = 'whitesmoke'
+                document.getElementById('video-notch').style.color = '#FF4081'
+                document.getElementById('video-filter').style.color = '#4A148C'
+                // props.data.reload()
+            }
+        }
+        document.getElementById('audio-filter').onclick = () => {
+            if (!props.data.audiofilter) {
+                props.data.setaudioFilter(a=>!a)
+                document.getElementById('audio-filter').style.backgroundColor = 'black'
+                document.getElementById('audio-notch').style.color = '#FFA615'
+                document.getElementById('audio-filter').style.color = 'white'
+                // props.data.reload()
+            } else {
+                props.data.setaudioFilter(a=>!a)
+                document.getElementById('audio-filter').style.backgroundColor = 'whitesmoke'
+                document.getElementById('audio-notch').style.color = '#FF4081'
+                document.getElementById('audio-filter').style.color = '#4A148C'
+                // props.data.reload()
+            }
+        }
+    })
     return(
         <div id="display-lvl2">
             <div id="filters">
@@ -42,10 +126,10 @@ function Options(){
             </div>
             <i className="fal fa-grip-lines-vertical fa-2x" style={{color: "#d1d1d0",margin: "5px 10px 0 10px"}}></i>
             <div id="view">
-                <label id="list-view" style={{color:"#d1d1d0",transform: "scale(1.5)"}}>
+                <label id="list-view" style={{color:"#d1d1d0",transform: "scale(1.5)"}} onClick={()=>{setView(true)}}>
                     <i className="fal fa-th-list"></i>
                 </label>
-                <label id="gallery-view" style={{color: "#FF4081",transform: "scale(1.5)"}}>
+                <label id="gallery-view" style={{color: "#FF4081",transform: "scale(1.5)"}} onClick={()=>{setView(false)}}>
                     <i className="fal fa-th"></i>
                 </label>
             </div>

@@ -15,7 +15,8 @@ function AddPeople(props){
                 <i className="fal fa-user-minus" style={{marginRight: "10px"}}></i>
                 Remove
             </label>
-            <label id="add-people-cancel" className="confirm-keys">Cancel</label>
+            <label id="add-people-cancel" className="confirm-keys" onClick={()=>{props.data.setAddPeople(!props.data.addPeople)}}>
+                Cancel</label>
         </div>
 
 )
