@@ -54,6 +54,8 @@ function App() {
     const [mediaWinName,setMediaWinName] = useState('')
     const [popup,setpopup]=useState(false)
     const [popupMsg,setPopupMsg] = useState('')
+    const [showpplAdded,setShowpplAdded] = useState([])
+    const [curCollecName,setCurCollecName] = useState('')
 
     function inituserdetails() {
         let cookies = document.cookie
@@ -83,12 +85,13 @@ function App() {
                     setShowAddedPeople:setShowAddedPeople}}/>
 
             <Mainframe data={{loggedIn:loggedIn,token:token,name:name,email:email,password:password,space:space,
-                        createFolder:createFolder,setCreateFolder:setCreateFolder,createFile:createFile,blank:blank,
-                        setBlank:setBlank,setFdata:setFdata,setMediasrc:setMediasrc,setMediaWinName:setMediaWinName,
-                        setEditorWindow:setEditorWindow,setVideoWindow:setVideoWindow,setPhotoWindow:setPhotoWindow,
-                        setAudioWindow:setAudioWindow,popup:popup,setpopup:setpopup,setPopupMsg:setPopupMsg,
-                        setCreateFile:setCreateFile,uploadFile:uploadFile,setUploadFile:setUploadFile,uploadImage:uploadImage,
-                        setUploadImage:setUploadImage,createCollection:createCollection,setCreateCollection:setCreateCollection}}/>
+                createFolder:createFolder,setCreateFolder:setCreateFolder,createFile:createFile,blank:blank,
+                setBlank:setBlank,setFdata:setFdata,setMediasrc:setMediasrc,setMediaWinName:setMediaWinName,
+                setEditorWindow:setEditorWindow,setVideoWindow:setVideoWindow,setPhotoWindow:setPhotoWindow,
+                setAudioWindow:setAudioWindow,popup:popup,setpopup:setpopup,setPopupMsg:setPopupMsg,setCurCollecName:setCurCollecName,
+                setCreateFile:setCreateFile,uploadFile:uploadFile,setUploadFile:setUploadFile,uploadImage:uploadImage,
+                setUploadImage:setUploadImage,createCollection:createCollection,setCreateCollection:setCreateCollection,
+                curCollecName:curCollecName}}/>
 
             {about?<About data={{setAbout:setAbout,about:about,blank:blank,setBlank:setBlank}}/>:''}
 
@@ -108,7 +111,8 @@ function App() {
 
             {createCollection?<CreateCollection data={{createCollection:createCollection,setCreateCollection:setCreateCollection,blank:blank,setBlank:setBlank}}/> :''}
 
-            {showAddedPeople?<ShowPeople data={{showAddedPeople:showAddedPeople,setShowAddedPeople:setShowAddedPeople}}/>:''}
+            {showAddedPeople?<ShowPeople data={{showAddedPeople:showAddedPeople,setShowAddedPeople:setShowAddedPeople,addPeople:addPeople,
+            setAddPeople:setAddPeople,token:token,setShowpplAdded:setShowpplAdded}}/>:''}
 
             {editorWindow? <Editor data={{editorWindow:editorWindow,setEditorWindow:setEditorWindow,fdata:fdata,mediaWinName:mediaWinName}}/>:''}
 

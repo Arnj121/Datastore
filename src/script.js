@@ -25,28 +25,27 @@ initCollections()
 getFiles()
 getnewshares()
 
-function getnewshares(t=0) {
-    let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            let c = parseInt(this.responseText)
-            if (c > 0){
-                document.getElementById('shareno').innerText = c.toString()
-                document.getElementById('shareno').style.visibility ='visible'
-            }
-        }
-    }
-    let url = `http://localhost:4000/getsharefile?token=${userdetails['token']}&only=only`
-    if(t==1)
-        url = `http://localhost:4000/getsharefile?token=${userdetails['token']}&only=notonly`
-    xhr.open('GET',url)
-    xhr.send()
-}
-function initmenu() {
-    document.getElementById(curmenu).style.backgroundColor='whitesmoke'
-    document.getElementById(curmenu).style.color='#FFAB00'
-}
-
+// function getnewshares(t=0) {
+//     let xhr = new XMLHttpRequest()
+//     xhr.onreadystatechange = function () {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
+//             let c = parseInt(this.responseText)
+//             if (c > 0){
+//                 document.getElementById('shareno').innerText = c.toString()
+//                 document.getElementById('shareno').style.visibility ='visible'
+//             }
+//         }
+//     }
+//     let url = `http://localhost:4000/getsharefile?token=${userdetails['token']}&only=only`
+//     if(t==1)
+//         url = `http://localhost:4000/getsharefile?token=${userdetails['token']}&only=notonly`
+//     xhr.open('GET',url)
+//     xhr.send()
+// }
+// function initmenu() {
+//     document.getElementById(curmenu).style.backgroundColor='whitesmoke'
+//     document.getElementById(curmenu).style.color='#FFAB00'
+// }
 // function initspace(){
 //     let xhr = new XMLHttpRequest()
 //     xhr.onreadystatechange = function () {
@@ -58,7 +57,6 @@ function initmenu() {
 //     xhr.open('GET',`http://localhost:4000/getspace?email=${userdetails['email']}`)
 //     xhr.send()
 // }
-
 // function displayspace(){
 //     document.getElementById('space-lbl').innerText =`${convertBytes(userdetails['space'])} / 5 Gb`
 //     document.getElementById('space-progress').value = (userdetails['space']/(5*(10**9))).toString()
@@ -208,7 +206,6 @@ document.oncontextmenu = (e)=>{
 // document.getElementById('user-info').onclick = ()=>{
 //     //code red
 // }
-
 // function convertBytes(bytes){
 //     let s = bytes.toString(),x
 //     if(s.toString().length>9) {
@@ -227,73 +224,72 @@ document.oncontextmenu = (e)=>{
 //         x= s+' b'
 //     return x
 // }
-
-document.getElementById('space-info').onclick = ()=>{
-    siw=1
-    let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-        if(xhr.readyState ==4){
-            let response = JSON.parse(this.response)
-            console.log(response)
-            if(response['status']==1) {
-                let l = 5 * (10 ** 9)
-                document.getElementById('video').style.width = ((response['videosize'] / l) * 100).toString() + '%'
-                document.getElementById('videocount').innerText = response['videocount']
-                document.getElementById('video-size').innerText = convertBytes(response['videosize'])
-
-                document.getElementById('audio').style.width = ((response['audiosize'] / l) * 100).toString() + '%'
-                document.getElementById('audiocount').innerText = response['audiocount']
-                document.getElementById('audio-size').innerText = convertBytes(response['audiosize'])
-
-                document.getElementById('images').style.width = ((response['imgsize'] / l) * 100).toString() + '%'
-                document.getElementById('imgcount').innerText = response['imgcount']
-                document.getElementById('img-size').innerText = convertBytes(response['imgsize'])
-
-                document.getElementById('docs').style.width = ((response['docsize'] / l) * 100).toString() + '%'
-                document.getElementById('doccount').innerText = response['doccount']
-                document.getElementById('docs-size').innerText = convertBytes(response['docsize'])
-
-                let k = l - (response['videosize'] + response['imgsize'] + response['audiosize'] + response['docsize'])
-                document.getElementById('free').style.width = ((k / l) * 100).toString() + '%'
-                document.getElementById('free-size').innerText = convertBytes(k)
-                document.getElementById('space-info-window').style.visibility = 'visible'
-                document.getElementById('blank').style.visibility = 'visible'
-            }
-            else{
-                let l = 5 * (10 ** 9)
-                document.getElementById('video').style.width = '0%'
-                document.getElementById('videocount').innerText = response['videocount']
-                document.getElementById('video-size').innerText = convertBytes(0)
-
-                document.getElementById('audio').style.width = '0%'
-                document.getElementById('audiocount').innerText = response['audiocount']
-                document.getElementById('audio-size').innerText = convertBytes(0)
-
-                document.getElementById('images').style.width = '0%'
-                document.getElementById('imgcount').innerText = response['imgcount']
-                document.getElementById('img-size').innerText = convertBytes(0)
-
-                document.getElementById('docs').style.width = '0%'
-                document.getElementById('doccount').innerText = response['doccount']
-                document.getElementById('docs-size').innerText = convertBytes(0)
-
-                let k = l - 0
-                document.getElementById('free').style.width = ((k / l) * 100).toString() + '%'
-                document.getElementById('free-size').innerText = convertBytes(k)
-                document.getElementById('space-info-window').style.visibility = 'visible'
-                document.getElementById('blank').style.visibility = 'visible'
-            }
-
-        }
-    }
-    xhr.open('GET',`http://localhost:4000/spaceanalysis?token=${userdetails['token']}`)
-    xhr.send()
-}
-document.getElementById('close-space-window').onclick = ()=>{
-    siw=0
-    document.getElementById('blank').style.visibility = 'hidden'
-    document.getElementById('space-info-window').style.visibility = 'hidden'
-    /*document.getElementById('video').style.width = (response['videosize']/l).toString()+'%'
+// document.getElementById('space-info').onclick = ()=>{
+//     siw=1
+//     let xhr = new XMLHttpRequest()
+//     xhr.onreadystatechange = function () {
+//         if(xhr.readyState ==4){
+//             let response = JSON.parse(this.response)
+//             console.log(response)
+//             if(response['status']==1) {
+//                 let l = 5 * (10 ** 9)
+//                 document.getElementById('video').style.width = ((response['videosize'] / l) * 100).toString() + '%'
+//                 document.getElementById('videocount').innerText = response['videocount']
+//                 document.getElementById('video-size').innerText = convertBytes(response['videosize'])
+//
+//                 document.getElementById('audio').style.width = ((response['audiosize'] / l) * 100).toString() + '%'
+//                 document.getElementById('audiocount').innerText = response['audiocount']
+//                 document.getElementById('audio-size').innerText = convertBytes(response['audiosize'])
+//
+//                 document.getElementById('images').style.width = ((response['imgsize'] / l) * 100).toString() + '%'
+//                 document.getElementById('imgcount').innerText = response['imgcount']
+//                 document.getElementById('img-size').innerText = convertBytes(response['imgsize'])
+//
+//                 document.getElementById('docs').style.width = ((response['docsize'] / l) * 100).toString() + '%'
+//                 document.getElementById('doccount').innerText = response['doccount']
+//                 document.getElementById('docs-size').innerText = convertBytes(response['docsize'])
+//
+//                 let k = l - (response['videosize'] + response['imgsize'] + response['audiosize'] + response['docsize'])
+//                 document.getElementById('free').style.width = ((k / l) * 100).toString() + '%'
+//                 document.getElementById('free-size').innerText = convertBytes(k)
+//                 document.getElementById('space-info-window').style.visibility = 'visible'
+//                 document.getElementById('blank').style.visibility = 'visible'
+//             }
+//             else{
+//                 let l = 5 * (10 ** 9)
+//                 document.getElementById('video').style.width = '0%'
+//                 document.getElementById('videocount').innerText = response['videocount']
+//                 document.getElementById('video-size').innerText = convertBytes(0)
+//
+//                 document.getElementById('audio').style.width = '0%'
+//                 document.getElementById('audiocount').innerText = response['audiocount']
+//                 document.getElementById('audio-size').innerText = convertBytes(0)
+//
+//                 document.getElementById('images').style.width = '0%'
+//                 document.getElementById('imgcount').innerText = response['imgcount']
+//                 document.getElementById('img-size').innerText = convertBytes(0)
+//
+//                 document.getElementById('docs').style.width = '0%'
+//                 document.getElementById('doccount').innerText = response['doccount']
+//                 document.getElementById('docs-size').innerText = convertBytes(0)
+//
+//                 let k = l - 0
+//                 document.getElementById('free').style.width = ((k / l) * 100).toString() + '%'
+//                 document.getElementById('free-size').innerText = convertBytes(k)
+//                 document.getElementById('space-info-window').style.visibility = 'visible'
+//                 document.getElementById('blank').style.visibility = 'visible'
+//             }
+//
+//         }
+//     }
+//     xhr.open('GET',`http://localhost:4000/spaceanalysis?token=${userdetails['token']}`)
+//     xhr.send()
+// }
+// document.getElementById('close-space-window').onclick = ()=>{
+//     siw=0
+//     document.getElementById('blank').style.visibility = 'hidden'
+//     document.getElementById('space-info-window').style.visibility = 'hidden'
+/*document.getElementById('video').style.width = (response['videosize']/l).toString()+'%'
     document.getElementById('videocount').innerText = response['videocount']
     document.getElementById('audio').style.width = (response['audiosize']/l).toString()+'%'
     document.getElementById('audiocount').innerText = response['audiocount']
@@ -304,57 +300,57 @@ document.getElementById('close-space-window').onclick = ()=>{
     document.getElementById('free').style.width = (l-(response['videosize']+response['imgsize']+response['audiocount']+response['dococunt'])/l).toString()+'%'
     document.getElementById('space-info-window').style.visibility='visible'
     document.getElementById('blank').style.visibility = 'visible'*/
-}
-var show_ppl_added=[];
-document.getElementById('show-added-people').onclick = ()=>{
-    let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            peopleRecieved = JSON.parse(this.response)
-            peopleRecieved = peopleRecieved['0']
-            if(peopleRecieved.length == 0){
-                let ele = document.createElement('label')
-                ele.style.margin = 'auto'
-                ele.innerText = 'You have not added anyone'
-                ele.style.fontSize ='large'
-                ele.id = 'notadded'
-                document.getElementById('people-added-window').appendChild(ele)
-            }
-            else {
-                for (let i = 0; i < peopleRecieved.length; i++) {
-                    let lab = document.createElement('label')
-                    lab.id = Math.floor(Math.random() * 1000).toString() + 'rnd'
-                    let fa = document.createElement('i');
-                    fa.className = 'fal fa-user';
-                    fa.style.marginRight = '10px'
-                    show_ppl_added.push(lab.id)
-                    lab.className = 'people-added-var'
-                    lab.innerText = peopleRecieved[i]
-                    lab.style.color = 'black'
-                    lab.onclick = (e) => {
-                        peopleselct = e.target.id
-                        if (document.getElementById(peopleselct).style.color == 'black') {
-                            document.getElementById(peopleselct).style.backgroundColor = 'black'
-                            document.getElementById(peopleselct).style.color = 'white'
-                        } else {
-                            document.getElementById(peopleselct).style.backgroundColor = 'whitesmoke'
-                            document.getElementById(peopleselct).style.color = 'black'
-                        }
-                    }
-                    lab.prepend(fa)
-                    document.getElementById('people-added-window').appendChild(lab)
-                }
-            }
-            document.getElementById('show-added-people-window').style.visibility = 'visible'
-            document.getElementById('blank').style.visibility='visble'
-            document.getElementById('blank').style.visibility = 'visible'
-            peopleRecieved={}
-            showpplwind = 1
-        }
-    }
-    xhr.open('GET',`http://localhost:4000/getpeople?token=${userdetails['token']}`)
-    xhr.send()
-}
+// }
+// var show_ppl_added=[];
+// document.getElementById('show-added-people').onclick = ()=>{
+//     let xhr = new XMLHttpRequest()
+//     xhr.onreadystatechange = function () {
+//         if (xhr.readyState == 4) {
+//             peopleRecieved = JSON.parse(this.response)
+//             peopleRecieved = peopleRecieved['0']
+//             if(peopleRecieved.length == 0){
+//                 let ele = document.createElement('label')
+//                 ele.style.margin = 'auto'
+//                 ele.innerText = 'You have not added anyone'
+//                 ele.style.fontSize ='large'
+//                 ele.id = 'notadded'
+//                 document.getElementById('people-added-window').appendChild(ele)
+//             }
+//             else {
+//                 for (let i = 0; i < peopleRecieved.length; i++) {
+//                     let lab = document.createElement('label')
+//                     lab.id = Math.floor(Math.random() * 1000).toString() + 'rnd'
+//                     let fa = document.createElement('i');
+//                     fa.className = 'fal fa-user';
+//                     fa.style.marginRight = '10px'
+//                     show_ppl_added.push(lab.id)
+//                     lab.className = 'people-added-var'
+//                     lab.innerText = peopleRecieved[i]
+//                     lab.style.color = 'black'
+//                     lab.onclick = (e) => {
+//                         peopleselct = e.target.id
+//                         if (document.getElementById(peopleselct).style.color == 'black') {
+//                             document.getElementById(peopleselct).style.backgroundColor = 'black'
+//                             document.getElementById(peopleselct).style.color = 'white'
+//                         } else {
+//                             document.getElementById(peopleselct).style.backgroundColor = 'whitesmoke'
+//                             document.getElementById(peopleselct).style.color = 'black'
+//                         }
+//                     }
+//                     lab.prepend(fa)
+//                     document.getElementById('people-added-window').appendChild(lab)
+//                 }
+//             }
+//             document.getElementById('show-added-people-window').style.visibility = 'visible'
+//             document.getElementById('blank').style.visibility='visble'
+//             document.getElementById('blank').style.visibility = 'visible'
+//             peopleRecieved={}
+//             showpplwind = 1
+//         }
+//     }
+//     xhr.open('GET',`http://localhost:4000/getpeople?token=${userdetails['token']}`)
+//     xhr.send()
+// }
 document.getElementById('add-more').onclick = ()=>{
     document.getElementById('add-people-window').style.visibility='visible'
     document.getElementById('show-added-people-window').style.visibility='hidden'
@@ -517,7 +513,6 @@ document.getElementById('search').oninput = (e)=>{
 //         RelaodWithFilter()
 //     }
 // }
-
 // function RelaodWithFilter() {
 //     let filterlist = ''
 //     if (filters['image-notch'] == 1)
@@ -583,33 +578,33 @@ document.getElementById('select-file').onclick = ()=>{
         document.getElementById('check').style.color = '#3FFF4D'
     }
 }
-function addcheck(id){
-    if(selectedfilelist.includes(id)){
-        selectedfilelist = selectedfilelist.slice(0,selectedfilelist.indexOf(id)).concat(selectedfilelist.slice(selectedfilelist.indexOf(id)+1,selectedfilelist.length-1))
-        if(view ==0)
-            try {document.getElementById(id).removeChild(document.getElementById(id).getElementsByTagName('i')[0])}catch (e) {}
-        else{
-            document.getElementById(id).style.backgroundColor = 'white'
-        }
-
-    }
-    else {
-        if(view==0) {
-            let ele = document.createElement('i')
-            ele.className = 'fal fa-check-square fa-2x'
-            selectedfilelist.push(id)
-            ele.style.color = '#3FFF4D'
-            ele.style.margin= '10px 0 0 10px'
-            //ele.style.transform = 'scale(3)'
-            try {document.getElementById(id).appendChild(ele)} catch (e) {}
-        }
-        else{
-            selectedfilelist.push(id)
-            document.getElementById(id).parentElement.style.backgroundColor = 'whitesmoke'
-            document.getElementById(id).parentElement.style.borderRadius = '5px'
-        }
-    }
-}
+// function addcheck(id){
+//     if(selectedfilelist.includes(id)){
+//         selectedfilelist = selectedfilelist.slice(0,selectedfilelist.indexOf(id)).concat(selectedfilelist.slice(selectedfilelist.indexOf(id)+1,selectedfilelist.length-1))
+//         if(view ==0)
+//             try {document.getElementById(id).removeChild(document.getElementById(id).getElementsByTagName('i')[0])}catch (e) {}
+//         else{
+//             document.getElementById(id).style.backgroundColor = 'white'
+//         }
+//
+//     }
+//     else {
+//         if(view==0) {
+//             let ele = document.createElement('i')
+//             ele.className = 'fal fa-check-square fa-2x'
+//             selectedfilelist.push(id)
+//             ele.style.color = '#3FFF4D'
+//             ele.style.margin= '10px 0 0 10px'
+//             //ele.style.transform = 'scale(3)'
+//             try {document.getElementById(id).appendChild(ele)} catch (e) {}
+//         }
+//         else{
+//             selectedfilelist.push(id)
+//             document.getElementById(id).parentElement.style.backgroundColor = 'whitesmoke'
+//             document.getElementById(id).parentElement.style.borderRadius = '5px'
+//         }
+//     }
+// }
 document.getElementById('delete-all').onclick = ()=> {
     if (selectfile == 1) {
         for (let i = 0; i < selectedfilelist.length; i++) {
@@ -2068,44 +2063,42 @@ document.getElementById('back').onclick = ()=>{
     }
 }
 
-function showNav(){
-    let abskeys = Object.keys(absoluteids)
-    for(let i=0;i<abskeys.length;i++){
-        document.getElementById('nav-display').removeChild(document.getElementById(absoluteids[abskeys[i]]))
-    }
-    absoluteids=[];
-    let splitcwdstring = cwdstring.split('-')
-    for(let i=0;i<splitcwdstring.length;i++){
-        let name = document.createElement('label')
-        let j = document.createElement('i')
-        let text;
-        if(splitcwdstring[i] == 'ROOT')
-            text = masking
-        else
-            text = splitcwdstring[i]
-        name.innerText=text
-        let nameid=splitcwdstring.slice(0,i+1).join('-')
-        name.id=text == masking?'ROOT':nameid
-        name.className = 'links'
-        j.className='fal fa-chevron-right arrow'
-        let rnd= Math.floor(Math.random()*1000).toString()+'abc'
-        absoluteids[nameid] = text ==masking?'ROOT':nameid
-        rnd = Math.floor(Math.random()*1000).toString()+'abc'
-        j.id=rnd
-        absoluteids[rnd]=rnd
-        name.addEventListener('click',(e)=>{
-            cwdstring=e.target.id;//it has the id to where the cut-off must be perfomred
-            let cwdstringsplit = cwdstring.split('-')
-            cwd = cwdstringsplit[cwdstringsplit.length-1]
-            cleanUp();
-            getFiles()})
-        document.getElementById('nav-display').appendChild(name)
-        document.getElementById('nav-display').appendChild(j)
-    }
-
-}
-
-
+// function showNav(){
+//     let abskeys = Object.keys(absoluteids)
+//     for(let i=0;i<abskeys.length;i++){
+//         document.getElementById('nav-display').removeChild(document.getElementById(absoluteids[abskeys[i]]))
+//     }
+//     absoluteids=[];
+//     let splitcwdstring = cwdstring.split('-')
+//     for(let i=0;i<splitcwdstring.length;i++){
+//         let name = document.createElement('label')
+//         let j = document.createElement('i')
+//         let text;
+//         if(splitcwdstring[i] == 'ROOT')
+//             text = masking
+//         else
+//             text = splitcwdstring[i]
+//         name.innerText=text
+//         let nameid=splitcwdstring.slice(0,i+1).join('-')
+//         name.id=text == masking?'ROOT':nameid
+//         name.className = 'links'
+//         j.className='fal fa-chevron-right arrow'
+//         let rnd= Math.floor(Math.random()*1000).toString()+'abc'
+//         absoluteids[nameid] = text ==masking?'ROOT':nameid
+//         rnd = Math.floor(Math.random()*1000).toString()+'abc'
+//         j.id=rnd
+//         absoluteids[rnd]=rnd
+//         name.addEventListener('click',(e)=>{
+//             cwdstring=e.target.id;//it has the id to where the cut-off must be perfomred
+//             let cwdstringsplit = cwdstring.split('-')
+//             cwd = cwdstringsplit[cwdstringsplit.length-1]
+//             cleanUp();
+//             getFiles()})
+//         document.getElementById('nav-display').appendChild(name)
+//         document.getElementById('nav-display').appendChild(j)
+//     }
+//
+// }
 // function eventListeners(all=1,work=0) {
 //     let key = Object.keys(rndids)
 //     if(work != 0){
@@ -2572,95 +2565,95 @@ function showNav(){
 //     xhr.open('GET',`http://localhost:4000/listbinfiles?token=${userdetails['token']}&bin=1`)
 //     xhr.send()
 // }
-function showTrashIcon() {
-    let rndidskeys = Object.keys(rndids)
-    for(let i=0;i<rndidskeys.length;i++){
-        let id = Math.floor(Math.random()*1000).toString()+'tra'
-        trashids[id] = rndidskeys[i]
-        let ele = document.createElement('i')
-        ele.className = 'fal fa-trash-restore-alt cursor'
-        ele.id=id
-        ele.style.transform = 'scale(1.5)'
-        ele.style.marginLeft = '10px'
-        ele.style.marginTop = '10px'
-        ele.style.color = '#1A237E'
-        ele.onclick = (e)=>{
-            let filename = rndids[trashids[e.target.id]]['name']
-            let xhr = new XMLHttpRequest()
-            xhr.onreadystatechange = function(){
-                if(xhr.readyState==4 && xhr.status==200){
-                    delete rndids[trashids[e.target.id]]
-                    delete info[trashids[e.target.id]]
-                    delete rndlist[rndlist.indexOf(trashids[e.target.id])]
-                    document.getElementById('container-lvl2').removeChild(document.getElementById(trashids[e.target.id]).parentElement)
-                    displaypopup(`'${filename}' restored`)
-                    if(Object.keys(rndids).length==0){
-                        if(view ==0) {
-                            let ele = document.createElement('label')
-                            ele.innerText = 'Nothing here'
-                            ele.id ='nothing'
-                            ele.style.fontSize = 'large'
-                            ele.style.margin = 'auto'
-                            document.getElementById('container-lvl2').appendChild(ele)
-                        }
-                        else{
-                            let ele = document.createElement('label')
-                            ele.innerText = 'Nothing here'
-                            ele.id ='nothing'
-                            ele.style.fontSize = 'large'
-                            ele.style.margin = 'auto'
-                            document.getElementById('container-lvl2').appendChild(ele)
-                        }
-                    }
-                }
-            }
-            xhr.open('POST',`http://localhost:4000/restorefile?token=${userdetails['token']}`)
-            xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
-            xhr.send(JSON.stringify({'filename':filename,'cwdstring':info[trashids[e.target.id]]['cwd']}))
-        }
-        document.getElementById(rndidskeys[i]).appendChild(ele)
-    }
-}
+// function showTrashIcon() {
+//     let rndidskeys = Object.keys(rndids)
+//     for(let i=0;i<rndidskeys.length;i++){
+//         let id = Math.floor(Math.random()*1000).toString()+'tra'
+//         trashids[id] = rndidskeys[i]
+//         let ele = document.createElement('i')
+//         ele.className = 'fal fa-trash-restore-alt cursor'
+//         ele.id=id
+//         ele.style.transform = 'scale(1.5)'
+//         ele.style.marginLeft = '10px'
+//         ele.style.marginTop = '10px'
+//         ele.style.color = '#1A237E'
+//         ele.onclick = (e)=>{
+//             let filename = rndids[trashids[e.target.id]]['name']
+//             let xhr = new XMLHttpRequest()
+//             xhr.onreadystatechange = function(){
+//                 if(xhr.readyState==4 && xhr.status==200){
+//                     delete rndids[trashids[e.target.id]]
+//                     delete info[trashids[e.target.id]]
+//                     delete rndlist[rndlist.indexOf(trashids[e.target.id])]
+//                     document.getElementById('container-lvl2').removeChild(document.getElementById(trashids[e.target.id]).parentElement)
+//                     displaypopup(`'${filename}' restored`)
+//                     if(Object.keys(rndids).length==0){
+//                         if(view ==0) {
+//                             let ele = document.createElement('label')
+//                             ele.innerText = 'Nothing here'
+//                             ele.id ='nothing'
+//                             ele.style.fontSize = 'large'
+//                             ele.style.margin = 'auto'
+//                             document.getElementById('container-lvl2').appendChild(ele)
+//                         }
+//                         else{
+//                             let ele = document.createElement('label')
+//                             ele.innerText = 'Nothing here'
+//                             ele.id ='nothing'
+//                             ele.style.fontSize = 'large'
+//                             ele.style.margin = 'auto'
+//                             document.getElementById('container-lvl2').appendChild(ele)
+//                         }
+//                     }
+//                 }
+//             }
+//             xhr.open('POST',`http://localhost:4000/restorefile?token=${userdetails['token']}`)
+//             xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
+//             xhr.send(JSON.stringify({'filename':filename,'cwdstring':info[trashids[e.target.id]]['cwd']}))
+//         }
+//         document.getElementById(rndidskeys[i]).appendChild(ele)
+//     }
+// }
 
-function showStopSharingicon() {
-    let rndidskeys = Object.keys(rndids)
-    for(let i=0;i<rndidskeys.length;i++){
-        let id = Math.floor(Math.random()*1000).toString()+'stsh'
-        shareids[id] = rndidskeys[i]
-        let ele = document.createElement('label')
-        ele.id=id
-        ele.className='cursor'
-        ele.innerText='Stop Sharing'
-        ele.style.padding='0 10px 5px 10px'
-        ele.style.backgroundColor='#252524'
-        ele.style.color = 'white'
-        ele.onclick = (e)=>{
-            let filename = rndids[shareids[e.target.id]]['name']
-            let xhr = new XMLHttpRequest()
-            xhr.onreadystatechange = function(){
-                if(xhr.readyState==4 && xhr.status==200){
-                    delete rndids[shareids[e.target.id]]
-                    delete info[shareids[e.target.id]]
-                    delete rndlist[rndlist.indexOf(shareids[e.target.id])]
-                    document.getElementById('container-lvl2').removeChild(document.getElementById(shareids[e.target.id]).parentElement)
-                    displaypopup(`'${filename}' stopped sharing`)
-                    if(Object.keys(rndids).length==0){
-                        let ele = document.createElement('label')
-                        ele.innerText = 'Nothing here'
-                        ele.style.fontSize='large'
-                        ele.id ='nothing'
-                        ele.style.margin ='auto'
-                        document.getElementById('container-lvl2').appendChild(ele)
-                    }
-                }
-            }
-            xhr.open('POST',`http://localhost:4000/stopsharing?token=${userdetails['token']}`)
-            xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
-            xhr.send(JSON.stringify({'filename':filename,'cwdstring':info[shareids[e.target.id]]['cwd']}))
-        }
-        document.getElementById(rndidskeys[i]).appendChild(ele)
-    }
-}
+// function showStopSharingicon() {
+//     let rndidskeys = Object.keys(rndids)
+//     for(let i=0;i<rndidskeys.length;i++){
+//         let id = Math.floor(Math.random()*1000).toString()+'stsh'
+//         shareids[id] = rndidskeys[i]
+//         let ele = document.createElement('label')
+//         ele.id=id
+//         ele.className='cursor'
+//         ele.innerText='Stop Sharing'
+//         ele.style.padding='0 10px 5px 10px'
+//         ele.style.backgroundColor='#252524'
+//         ele.style.color = 'white'
+//         ele.onclick = (e)=>{
+//             let filename = rndids[shareids[e.target.id]]['name']
+//             let xhr = new XMLHttpRequest()
+//             xhr.onreadystatechange = function(){
+//                 if(xhr.readyState==4 && xhr.status==200){
+//                     delete rndids[shareids[e.target.id]]
+//                     delete info[shareids[e.target.id]]
+//                     delete rndlist[rndlist.indexOf(shareids[e.target.id])]
+//                     document.getElementById('container-lvl2').removeChild(document.getElementById(shareids[e.target.id]).parentElement)
+//                     displaypopup(`'${filename}' stopped sharing`)
+//                     if(Object.keys(rndids).length==0){
+//                         let ele = document.createElement('label')
+//                         ele.innerText = 'Nothing here'
+//                         ele.style.fontSize='large'
+//                         ele.id ='nothing'
+//                         ele.style.margin ='auto'
+//                         document.getElementById('container-lvl2').appendChild(ele)
+//                     }
+//                 }
+//             }
+//             xhr.open('POST',`http://localhost:4000/stopsharing?token=${userdetails['token']}`)
+//             xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
+//             xhr.send(JSON.stringify({'filename':filename,'cwdstring':info[shareids[e.target.id]]['cwd']}))
+//         }
+//         document.getElementById(rndidskeys[i]).appendChild(ele)
+//     }
+// }
 
 // function showremovefavicon(){
 //     let keys = Object.keys(rndids)
@@ -2699,42 +2692,42 @@ function showStopSharingicon() {
 //     }
 // }
 
-function showremovefromcol() {
-    let keys = Object.keys(rndids)
-    for(let i=0;i<keys.length;i++){
-        let ele = document.createElement('i')
-        ele.className = 'fal fa-minus cursor'
-        ele.style.color = '#AA00FF'
-        ele.style.transform  = 'scale(1.5)'
-        ele.id = keys[i]+'col'
-        ele.style.marginLeft ='10px'
-        ele.onclick = (e)=>{
-            let id = e.target.id.slice(0,-3)
-            let xhr = new XMLHttpRequest()
-            xhr.onreadystatechange = function () {
-                if(xhr.readyState == 4){
-                    document.getElementById('container-lvl2').removeChild(document.getElementById(id).parentElement)
-                    displaypopup(`'${info[id]['name']}' removed from ${curcolname}`)
-                    delete rndids[id]
-                    delete info[id]
-                    delete rndlist[rndlist.indexOf(id)]
-                    if(Object.keys(rndids).length==0){
-                        let ele = document.createElement('label')
-                        ele.innerText = 'Nothing here'
-                        ele.style.fontSize='large'
-                        ele.id ='nothing'
-                        ele.style.margin ='auto'
-                        document.getElementById('container-lvl2').appendChild(ele)
-                    }
-                }
-            }
-            xhr.open('POST','http://localhost:4000/removefromcol')
-            xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
-            xhr.send(JSON.stringify({'token':userdetails['token'],'cwd':info[id]['cwd'],'name':info[id]['name'],'cname':curcolname}))
-        }
-        document.getElementById(keys[i]).appendChild(ele)
-    }
-}
+// function showremovefromcol() {
+//     let keys = Object.keys(rndids)
+//     for(let i=0;i<keys.length;i++){
+//         let ele = document.createElement('i')
+//         ele.className = 'fal fa-minus cursor'
+//         ele.style.color = '#AA00FF'
+//         ele.style.transform  = 'scale(1.5)'
+//         ele.id = keys[i]+'col'
+//         ele.style.marginLeft ='10px'
+//         ele.onclick = (e)=>{
+//             let id = e.target.id.slice(0,-3)
+//             let xhr = new XMLHttpRequest()
+//             xhr.onreadystatechange = function () {
+//                 if(xhr.readyState == 4){
+//                     document.getElementById('container-lvl2').removeChild(document.getElementById(id).parentElement)
+//                     displaypopup(`'${info[id]['name']}' removed from ${curcolname}`)
+//                     delete rndids[id]
+//                     delete info[id]
+//                     delete rndlist[rndlist.indexOf(id)]
+//                     if(Object.keys(rndids).length==0){
+//                         let ele = document.createElement('label')
+//                         ele.innerText = 'Nothing here'
+//                         ele.style.fontSize='large'
+//                         ele.id ='nothing'
+//                         ele.style.margin ='auto'
+//                         document.getElementById('container-lvl2').appendChild(ele)
+//                     }
+//                 }
+//             }
+//             xhr.open('POST','http://localhost:4000/removefromcol')
+//             xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
+//             xhr.send(JSON.stringify({'token':userdetails['token'],'cwd':info[id]['cwd'],'name':info[id]['name'],'cname':curcolname}))
+//         }
+//         document.getElementById(keys[i]).appendChild(ele)
+//     }
+// }
 
 // function getFiles() {
 //     if(masking == 'Favorites'){

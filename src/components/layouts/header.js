@@ -37,7 +37,6 @@ function Header(props){
         else x= s+' b'
         return x
     }
-
     function displayspace(){
         setSpaceLbl(convertBytes(props.data.space) +"/ 5 Gb")
         setProgress((props.data.space/(5*(10**9))).toString())

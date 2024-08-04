@@ -6,6 +6,7 @@ function Sidebar(props){
     const [curmenu,setCurmenu] = useState('my-home')
     const [showNew, setShowNew]=useState(false)
     const [collectionList,setCollectionList] = useState(false)
+    const [shareNo,setShareNo] = useState(0)
 
     function initmenu() {
         document.getElementById(curmenu).style.backgroundColor='whitesmoke'
@@ -18,8 +19,91 @@ function Sidebar(props){
             document.getElementById(curmenu).style.color = '#4A148C'
         }
     }
+    function getnewshares(t=0) {
+        let xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200)
+                setShareNo(parseInt(this.responseText))
+        }
+        let url = `http://localhost:4000/getsharefile?token=${props.data.token}&only=only`
+        if(t==1)
+            url = `http://localhost:4000/getsharefile?token=${props.data.token}&only=notonly`
+        xhr.open('GET',url)
+        xhr.send()
+    }
 
     useEffect(initmenu,[curmenu])
+    useEffect(()=> {
+        document.getElementById('my-home').onclick = (e) => {
+            props.data.setCwd('ROOT')
+            props.data.setCwdString('ROOT')
+            props.data.setMasking('Home')
+            reinitmenu(curmenu)
+            // document.getElementById(curmenu).style.backgroundColor='white'
+            // document.getElementById(curmenu).style.color ='#4A148C'
+            setCurmenu('my-home')
+            // initmenu()
+            props.data.setBrowseHistory(['ROOT'])
+            props.data.cleanUp()
+            props.data.getFiles()
+        }
+        document.getElementById('favorites').onclick = (e) => {
+            props.data.setCwd('ROOT')
+            props.data.setCwdString('ROOT')
+            props.data.setMasking('Favorites')
+            props.data.setBrowseHistory(['Favorites'])
+            reinitmenu(curmenu)
+            // document.getElementById(curmenu).style.backgroundColor='white'
+            // document.getElementById(curmenu).style.color ='#4A148C'
+            setCurmenu('favorites')
+            // initmenu()
+            props.data.cleanUp()
+            props.data.getFavfiles()
+        }
+        document.getElementById('share').onclick = () => {
+            getnewshares(1)
+            props.data.setCwd('ROOT')
+            props.data.setCwdString('ROOT')
+            props.data.setMasking('Shared with me')
+            document.getElementById('shareno').innerText = '0'
+            document.getElementById('shareno').style.visibility = 'hidden'
+            props.data.setBrowseHistory(['Shared with me'])
+            reinitmenu(curmenu)
+            // document.getElementById(curmenu).style.backgroundColor='white'
+            // document.getElementById(curmenu).style.color ='#4A148C'
+            setCurmenu('share')
+            // initmenu()
+            props.data.cleanUp()
+            props.data.getsharefiles()
+        }
+        document.getElementById('bin').onclick = (e) => {
+            props.data.setCwd('ROOT')
+            props.data.setCwdString('ROOT')
+            props.data.setMasking('Bin')
+            props.data.setBrowseHistory(['Bin'])
+            reinitmenu(curmenu)
+            // document.getElementById(curmenu).style.backgroundColor='white'
+            // document.getElementById(curmenu).style.color ='#4A148C'
+            setCurmenu(e.target.id)
+            // initmenu()
+            props.data.cleanUp()
+            props.data.getBinFiles()
+        }
+        document.getElementById('files-shared').onclick = (e) => {
+            props.data.setCwd('ROOT')
+            props.data.setCwdString('ROOT')
+            props.data.setMasking('Files-Shared')
+            props.data.setBrowseHistory(['Files-Shared'])
+            reinitmenu(curmenu)
+            // document.getElementById(curmenu).style.backgroundColor='white'
+            // document.getElementById(curmenu).style.color ='#4A148C'
+            setCurmenu(e.target.id)
+            // initmenu()
+            props.data.cleanUp()
+            props.data.getfilesshared()
+        }
+    })
+
     render()
     {
         let temp=[]
@@ -50,11 +134,11 @@ function Sidebar(props){
             lbl.innerText = props.data.collectionList[i]
             lbl.id=props.data.collectionList[i]
             lbl.onclick = (e)=>{
-                cwd = 'ROOT'
-                cwdstring = 'ROOT'
-                masking='Collections'
-                browsehistory = ['collection#'+e.target.id]
-                curcolname = e.target.id
+                props.data.setCwd('ROOT')
+                props.data.setCwdString('ROOT')
+                props.data.setMasking('Collections')
+                props.setBrowseHistory(['collection#'+e.target.id])
+                props.data.setCurCollecName(e.target.id)
                 document.getElementById(curmenu).style.backgroundColor='whitesmoke'
                 initmenu()
                 props.data.cleanUp()
@@ -64,108 +148,7 @@ function Sidebar(props){
             temp.append(ele)
             // document.getElementById('usercollec').appendChild(ele)
         }
-        document.getElementById('my-home').onclick = (e)=>{
-            if(collection){
-                document.getElementById('collection-list').style.display='none'
-                collection=0
-            }
-            cwd = 'ROOT'
-            cwdstring = 'ROOT'
-            masking='Home'
-            document.getElementById(curmenu).style.backgroundColor='white'
-            document.getElementById(curmenu).style.color ='#4A148C'
-            curmenu = 'my-home'
-            initmenu()
-            browsehistory = ['ROOT']
-            cleanUp()
-            getFiles()
-        }
-        document.getElementById('favorites').onclick = (e)=>{
-            if(collection){
-                document.getElementById('collection-list').style.display='none'
-                collection=0
-            }
-            cwd = 'ROOT'
-            cwdstring = 'ROOT'
-            masking='Favorites'
-            browsehistory = ['Favorites']
-            document.getElementById(curmenu).style.backgroundColor='white'
-            document.getElementById(curmenu).style.color ='#4A148C'
-            curmenu = 'favorites'
-            initmenu()
-            cleanUp()
-            getFavfiles()
-        }
-        document.getElementById('share').onclick = ()=>{
-            if(collection){
-                document.getElementById('collection-list').style.display='none'
-                collection=0
-            }
-            getnewshares(1)
-            cwd = 'ROOT'
-            cwdstring = 'ROOT'
-            masking='Shared with me'
-            document.getElementById('shareno').innerText ='0'
-            document.getElementById('shareno').style.visibility='hidden'
-            browsehistory = ['Shared with me']
-            document.getElementById(curmenu).style.backgroundColor='white'
-            document.getElementById(curmenu).style.color ='#4A148C'
-            curmenu = 'share'
-            initmenu()
-            cleanUp()
-            getsharefiles()
-        }
 
-
-        document.getElementById('bin').onclick = (e)=>{
-            if(collection){
-                document.getElementById('collection-list').style.display='none'
-                collection=0
-            }
-            cwd = 'ROOT'
-            cwdstring = 'ROOT'
-            masking='Bin'
-            browsehistory = ['Bin']
-            document.getElementById(curmenu).style.backgroundColor='white'
-            document.getElementById(curmenu).style.color ='#4A148C'
-            curmenu = e.target.id
-            initmenu()
-            cleanUp()
-            getBinFiles()
-        }
-        document.getElementById('files-shared').onclick = (e)=>{
-            if(collection){
-                document.getElementById('collection-list').style.display='none'
-                collection=0
-            }
-            cwd = 'ROOT'
-            cwdstring = 'ROOT'
-            masking='Files-Shared'
-            browsehistory = ['Files-Shared']
-            document.getElementById(curmenu).style.backgroundColor='white'
-            document.getElementById(curmenu).style.color ='#4A148C'
-            curmenu = e.target.id
-            initmenu()
-            cleanUp()
-            getfilesshared()
-        }
-
-        document.getElementById('collection').onclick = (e)=>{
-            if(collection){
-                document.getElementById('collection-list').style.display='none'
-                collection=0
-            }
-            else{
-                document.getElementById('collection-list').style.display='block'
-                collection=1
-                document.getElementById(curmenu).style.backgroundColor='white'
-                document.getElementById(curmenu).style.color ='#4A148C'
-                curmenu = e.target.id
-                initmenu()
-
-            }
-
-        }
         return (
             <div id="menu">
                 <label id="add-new" className="sidelines" onClick={() => {
@@ -222,10 +205,9 @@ function Sidebar(props){
                 }}>
                     <i className="fal fa-share-alt" style={{transform: "scale(1.2)", margin: "0 10px 0 0"}}></i>
                     Shared with me
-                    <label id="shareno" style={{
-                        height: "5px", width: "5px", padding: "0 5px", visibility: "hidden",
+                    <label id="shareno" style={{height: "5px", width: "5px", padding: "0 5px",
                         borderRadius: "50px", backgroundColor: "#14070e", color: "white"
-                    }}></label>
+                    }}>{shareNo}</label>
                 </label>
                 <label id="files-shared" className="sidelines" onClick={() => {
                     reinitmenu('files-shared');
@@ -245,10 +227,10 @@ function Sidebar(props){
                     Collections
                 </label>
                 {collectionList ? <div id="collection-list">
-                    <div id="usercollec"></div>
+                    <div id="usercollec">{temp}</div>
                     <div id="addnewcoll" className="col-listitems" onClick={() => {
                         props.data.setCreateCollection(!props.data.createCollection)
-                    }}>{temp}
+                    }}>
                         <i className="fal fa-plus" style={{margin: "0 10px 0 0"}}></i>New
                     </div>
                 </div> : ''}
