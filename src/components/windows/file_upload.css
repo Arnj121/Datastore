@@ -15,7 +15,6 @@
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: 50% 50%;
     border-radius: 5px;
-    visibility: hidden;
     z-index: 4;
     background-color: white;
 }

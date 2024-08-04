@@ -3,12 +3,12 @@
     min-width: 400px;
     width: 35%;
     padding: 0 5px 0 5px;
-    height: 200px;
+    height: 0;
     max-height: 0;
-    visibility: hidden;
     box-shadow: 2px 2px 2px #c0c0bf;
     background-color: whitesmoke;
     display: grid;
+    visibility: hidden;
     overflow: hidden;
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 24% 25% 25% 25%;

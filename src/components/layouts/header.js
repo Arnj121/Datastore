@@ -9,6 +9,7 @@ function Header(props){
     const [settings,setSettings] =useState(false);
     const [spaceLbl,setSpaceLbl]=useState('')
     const [progress,setProgress]=useState('')
+
     function initspace(){
         let xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function () {
@@ -56,20 +57,20 @@ function Header(props){
                 <input placeholder="Search drive" type="text" id="search" autoComplete="off"/>
                 <div id="search-results"></div>
             </div>
-            <div id="search-options">
+            <div id="search-options" onClick={()=>{props.data.setSearchOptions(!props.data.searchOptions)}}>
                 <i className="fal fa-search-location" style={{color: "#c5c5c4",transform: "scale(1.5)"}}></i>
             </div>
             <div id="space-used">
                 <div style={{display: "flex",flexDirection: "row",justifyContent: "space-between"}}>
                     <label id="space-lbl">{spaceLbl}</label>
-                    <i className="fal fa-info-square cursor" id="space-info"
+                    <i className="fal fa-info-square cursor" id="space-info" onClick={()=>{props.data.setSpaceInfo(!props.data.spaceInfo)}}
                        style={{color: "#ff383c",margin: "auto 10px auto 0"}}></i>
                 </div>
                 <progress value={progress} id="space-progress"/>
             </div>
             <div id="side-options">
                 <div style={{display: 'flex',flexDirection: "column",textAlign: 'center',margin: '25px 10px'}}>
-                    <i id="show-added-people" className="fal fa-users" onClick={()=>{}}
+                    <i id="show-added-people" className="fal fa-users" onClick={()=>{props.data.setShowAddedPeople(!props.data.showAddedPeople)}}
                        style={{transform: 'scale(1.5)',color: '#c5c5c4',marginBottom: "5px"}}></i>
                     <label>People</label>
                 </div>

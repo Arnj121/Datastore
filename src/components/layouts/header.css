@@ -96,17 +96,21 @@ body{
 @keyframes show-search-options {
     from{
         max-height: 0;
-        padding: 0 5px 0 5px;;
+        height: 0;
+        padding: 0 5px 0 5px;
+        visibility: hidden;
     }
     to{
         max-height: 200px;
-        padding: 1px 5px 5px 5px;;
+        height: 200px;
+        visibility: visible;
+        padding: 1px 5px 5px 5px;
     }
 }
 @keyframes hide-search-options {
     from{
         max-height: 200px;
-        padding: 1px 5px 5px 5px;;
+        padding: 1px 5px 5px 5px;
     }
     to{
         max-height: 0;

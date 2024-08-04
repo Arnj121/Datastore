@@ -1,7 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
+import './search_settings.css'
+function SearchSettings(props){
 
-function searchSettings(){
-
+    useEffect(()=> {
+        if (props.data.searchOptions) {
+            try {
+                document.getElementById('search-settings-window').style.animationName = 'show-search-options'
+            }catch (e){}
+        } else {
+            try{
+                document.getElementById('search-settings-window').style.animationName = 'hide-search-options'
+            }catch (e){}
+        }
+    },[props.data.searchOptions])
     return(
         <div id="search-settings-window">
             <label id="search-location-lbl">Search</label>
@@ -22,9 +33,9 @@ function searchSettings(){
                     <option value="images">Images</option>
                     <option value="docs">Documents</option>
                 </select>
-                <label id="close-settings-window" className="confirm-keys">close</label>
+                <label id="close-settings-window" className="confirm-keys" onClick={()=>{props.data.setSearchOptions(!props.data.searchOptions)}}>close</label>
         </div>
     )
 }
 
-export default searchSettings
+export default SearchSettings

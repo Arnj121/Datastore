@@ -15,12 +15,12 @@ var curmenu='my-home',masking='Home',curcolname=0,FileSharedRecieved={};
 var status=0,oldcwdstring,newcwdstring,selectedFileToTransfer,selectedFileType;
 var FavFilesRecieved ={},CollectionList=[],collectiontoadd='',CollFilesRecieved={},shareids={}
 // var filters={'image-notch':0,'file-notch':0,'folder-notch':0,'video-notch':0,'audio-notch':0},
-var BinFilesRecieved={},trashids={}
+var BinFilesRecieved={}, trashids={}
 var ShareFilesRecieved={},peopleRecieved,searchOption=0,userinfo=0,filedblclicked=0
 var searchparam = {'searchloc':'home','owner':'all','email':0,'search-type':'all'}
 var view=0,pr=1
 // inituserdetails()
-initmenu()
+// initmenu()
 initCollections()
 getFiles()
 getnewshares()
@@ -673,45 +673,45 @@ document.getElementById('gallery-view').onclick = ()=>{
     document.getElementById('container-lvl2').style.removeProperty('flexDirection')
 }
 
-function displaypopup(msg){
-    function hide(){
-        document.getElementById('pop-up').style.animationName='hidepopup'
-        popup=0
-    }
-
-    if(popup==1){
-        clearInterval(hide)
-        document.getElementById('pop-up').style.animationName='hidepopup'
-        popup=0
-        displaypopup(msg)
-    }
-    else{
-        document.getElementById('msg').innerText=msg
-        document.getElementById('pop-up').style.animationName='showpopup'
-        setTimeout(hide,5000)
-        popup=1
-    }
-
-}
-document.getElementById('search-options').onclick = ()=>{
-    if(searchOption==1) {
-        document.getElementById('search-settings-window').style.animationName = 'hide-search-options'
-        document.getElementById('blank').style.visibility='hidden'
-        setTimeout(() => {
-            document.getElementById('search-settings-window').style.visibility = 'hidden'
-        }, 800)
-        searchOption = 0
-    }
-    else{
-        document.getElementById('search-settings-window').style.animationName='show-search-options'
-        document.getElementById('search-settings-window').style.visibility = 'visible'
-        document.getElementById('blank').style.visibility='visible'
-        searchOption=1
-    }
-}
-document.getElementById('close-settings-window').onclick = ()=>{
-    document.getElementById('search-options').click()
-}
+// function displaypopup(msg){
+//     function hide(){
+//         document.getElementById('pop-up').style.animationName='hidepopup'
+//         popup=0
+//     }
+//
+//     if(popup==1){
+//         clearInterval(hide)
+//         document.getElementById('pop-up').style.animationName='hidepopup'
+//         popup=0
+//         displaypopup(msg)
+//     }
+//     else{
+//         document.getElementById('msg').innerText=msg
+//         document.getElementById('pop-up').style.animationName='showpopup'
+//         setTimeout(hide,5000)
+//         popup=1
+//     }
+//
+// }
+// document.getElementById('search-options').onclick = ()=>{
+//     if(searchOption==1) {
+//         document.getElementById('search-settings-window').style.animationName = 'hide-search-options'
+//         document.getElementById('blank').style.visibility='hidden'
+//         setTimeout(() => {
+//             document.getElementById('search-settings-window').style.visibility = 'hidden'
+//         }, 800)
+//         searchOption = 0
+//     }
+//     else{
+//         document.getElementById('search-settings-window').style.animationName='show-search-options'
+//         document.getElementById('search-settings-window').style.visibility = 'visible'
+//         document.getElementById('blank').style.visibility='visible'
+//         searchOption=1
+//     }
+// }
+// document.getElementById('close-settings-window').onclick = ()=>{
+//     document.getElementById('search-options').click()
+// }
 
 
 document.getElementById('search-location-input').onchange = (e)=>{
@@ -829,16 +829,16 @@ document.getElementById('view-password').onclick = ()=>{
         document.getElementById('the-eye').classList.add('fa-eye-slash')
     }
 }
-document.getElementById('about-lbl').onclick = ()=>{
-    document.getElementById('about-window').style.visibility ='visible'
-    document.getElementById('blank').style.visibility = 'visible'
-    abtwind=1
-}
-document.getElementById('close-about-window').onclick = ()=>{
-    document.getElementById('about-window').style.visibility='hidden'
-    document.getElementById('blank').style.visibility = 'hidden'
-    abtwind=0
-}
+// document.getElementById('about-lbl').onclick = ()=>{
+//     document.getElementById('about-window').style.visibility ='visible'
+//     document.getElementById('blank').style.visibility = 'visible'
+//     abtwind=1
+// }
+// document.getElementById('close-about-window').onclick = ()=>{
+//     document.getElementById('about-window').style.visibility='hidden'
+//     document.getElementById('blank').style.visibility = 'hidden'
+//     abtwind=0
+// }
 
 function displaySearchResults(){
     let filenamekeys = Object.keys(searchresults)
@@ -887,59 +887,59 @@ function displaySearchResults(){
     document.getElementById('search-results').style.visibility = 'visible'
 }
 
-function initCollections() {
-    if(userdetails['token'].length!=0) {
-        let xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                let res = JSON.parse(this.response)
-                res = res[0];
-                for (let i = 0; i < res.length; i++) {
-                    CollectionList.push(res[i])
-                    let ele = document.createElement('label')
-                    ele.className = 'col-listitems'
-                    ele.id=res[i]+'p'
-                    let icon = document.createElement('i')
-                    icon.className = 'fal fa-minus cursor'
-                    icon.style.marginRight = '10px'
-                    icon.id = res[i]+'rm'
-                    icon.style.color='#4A148C'
-                    icon.onclick = (e)=>{
-                        let xhr = new XMLHttpRequest()
-                        xhr.onreadystatechange = function () {
-                            if(xhr.readyState==4){
-                                document.getElementById('usercollec').removeChild(document.getElementById(e.target.id.slice(0, -2)+'p'))
-                            }
-                        }
-                        xhr.open('POST',`http://localhost:4000/removecol`)
-                        xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
-                        xhr.send(JSON.stringify({'name':e.target.id.slice(0,-2),'token':userdetails['token']}))
-                    }
-                    ele.appendChild(icon)
-                    let lbl = document.createElement('label')
-                    lbl.className = 'cursor'
-                    lbl.innerText = res[i]
-                    lbl.id=res[i]
-                    lbl.onclick = (e)=>{
-                        cwd = 'ROOT'
-                        cwdstring = 'ROOT'
-                        masking='Collections'
-                        browsehistory = ['collection#'+e.target.id]
-                        curcolname = e.target.id
-                        document.getElementById(curmenu).style.backgroundColor='whitesmoke'
-                        initmenu()
-                        cleanUp()
-                        getCollecFiles()
-                    }
-                    ele.appendChild(lbl)
-                    document.getElementById('usercollec').appendChild(ele)
-                }
-            }
-        }
-        xhr.open('GET', `http://localhost:4000/getcollection?token=${userdetails['token']}`)
-        xhr.send()
-    }
-}
+// function initCollections() {
+//     if(userdetails['token'].length!=0) {
+//         let xhr = new XMLHttpRequest()
+//         xhr.onreadystatechange = function () {
+//             if (xhr.readyState == 4 && xhr.status == 200) {
+//                 let res = JSON.parse(this.response)
+//                 res = res[0];
+//                 for (let i = 0; i < res.length; i++) {
+//                     CollectionList.push(res[i])
+//                     let ele = document.createElement('label')
+//                     ele.className = 'col-listitems'
+//                     ele.id=res[i]+'p'
+//                     let icon = document.createElement('i')
+//                     icon.className = 'fal fa-minus cursor'
+//                     icon.style.marginRight = '10px'
+//                     icon.id = res[i]+'rm'
+//                     icon.style.color='#4A148C'
+//                     icon.onclick = (e)=>{
+//                         let xhr = new XMLHttpRequest()
+//                         xhr.onreadystatechange = function () {
+//                             if(xhr.readyState==4){
+//                                 document.getElementById('usercollec').removeChild(document.getElementById(e.target.id.slice(0, -2)+'p'))
+//                             }
+//                         }
+//                         xhr.open('POST',`http://localhost:4000/removecol`)
+//                         xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
+//                         xhr.send(JSON.stringify({'name':e.target.id.slice(0,-2),'token':userdetails['token']}))
+//                     }
+//                     ele.appendChild(icon)
+//                     let lbl = document.createElement('label')
+//                     lbl.className = 'cursor'
+//                     lbl.innerText = res[i]
+//                     lbl.id=res[i]
+//                     lbl.onclick = (e)=>{
+//                         cwd = 'ROOT'
+//                         cwdstring = 'ROOT'
+//                         masking='Collections'
+//                         browsehistory = ['collection#'+e.target.id]
+//                         curcolname = e.target.id
+//                         document.getElementById(curmenu).style.backgroundColor='whitesmoke'
+//                         initmenu()
+//                         cleanUp()
+//                         getCollecFiles()
+//                     }
+//                     ele.appendChild(lbl)
+//                     document.getElementById('usercollec').appendChild(ele)
+//                 }
+//             }
+//         }
+//         xhr.open('GET', `http://localhost:4000/getcollection?token=${userdetails['token']}`)
+//         xhr.send()
+//     }
+// }
 // function inituserdetails() {
 //     let cookies = document.cookie
 //     cookies  = cookies.split(';')
@@ -981,12 +981,12 @@ function logout() {
     xhr.open('GET',`http://localhost:4000/logout?token=${userdetails['token']}`)
     xhr.send()
 }
-document.getElementById('add-people').onclick=()=>{
-    document.getElementById('add-people-window').style.visibility ='visible'
-    addpeople=1
-    document.getElementById('blank').style.visibility = 'visible'
-
-}
+// document.getElementById('add-people').onclick=()=>{
+//     document.getElementById('add-people-window').style.visibility ='visible'
+//     addpeople=1
+//     document.getElementById('blank').style.visibility = 'visible'
+//
+// }
 var emails=[]
 document.getElementById('add-plus').onclick = ()=>{
     let email = document.getElementById('add-email-input').value
@@ -1058,21 +1058,21 @@ document.getElementById('add-people-cancel').onclick = ()=>{
 
 
 
-function cleanUp(){
-    let cont = document.createElement('div');cont.id='container-lvl2'
-    document.getElementById('container').removeChild(document.getElementById('container-lvl2'))
-    document.getElementById('container').appendChild(cont)
-    rndids = {}
-    Filerecieved = {}
-    rndlist=[]
-    if(contextmenuopened){
-        contextmenuopened=0
-        document.getElementById('right-click-contextmenu').style.visibility='hidden'
-    }
-    currentselected = 0
-    fullscreen = 0
-    info={}
-}
+// function cleanUp(){
+//     let cont = document.createElement('div');cont.id='container-lvl2'
+//     document.getElementById('container').removeChild(document.getElementById('container-lvl2'))
+//     document.getElementById('container').appendChild(cont)
+//     rndids = {}
+//     Filerecieved = {}
+//     rndlist=[]
+//     if(contextmenuopened){
+//         contextmenuopened=0
+//         document.getElementById('right-click-contextmenu').style.visibility='hidden'
+//     }
+//     currentselected = 0
+//     fullscreen = 0
+//     info={}
+// }
 
 //sideline event listenr
 document.getElementById('my-home').onclick = (e)=>{
@@ -1177,11 +1177,11 @@ document.getElementById('collection').onclick = (e)=>{
     }
 
 }
-document.getElementById('addnewcoll').onclick = ()=>{
-    cw=1
-    document.getElementById('create-collection-window').style.visibility='visible'
-    document.getElementById('blank').style.visibility = 'visible'
-
+// document.getElementById('addnewcoll').onclick = ()=>{
+//     cw=1
+//     document.getElementById('create-collection-window').style.visibility='visible'
+//     document.getElementById('blank').style.visibility = 'visible'
+//
 }
 document.getElementById('create-collection-confirm').onclick = () =>{
     let name = document.getElementById('name-coll').value
@@ -1243,44 +1243,44 @@ document.getElementById('create-collection-cancel').onclick = ()=>{
 }
 
 //add new folder the plus symblo onw
-document.getElementById('add-new').onclick = ()=>{
-    if(neww){
-        neww=0
-        document.getElementById('add-new-child').style.visibility = 'hidden'
-    }
-    else{
-        setTimeout(()=>{
-            neww=1
-            document.getElementById('add-new-child').style.visibility = 'visible'
-        },50)
-    }
-}
-
-//here comes the windows for the above opertaion
-document.getElementById('upload-file').onclick = ()=>{
-    if(fuw) {
-        document.getElementById('upload-file-input-window').style.visibility = 'hidden'
-        fuw = 0
-        document.getElementById('blank').style.visibility = 'hidden'
-    }
-    else{
-        document.getElementById('upload-file-input-window').style.visibility = 'visible'
-        fuw=1
-        document.getElementById('blank').style.visibility = 'visible'
-    }
-}
-document.getElementById('upload-image').onclick = ()=>{
-    if(iuw) {
-        document.getElementById('upload-image-input-window').style.visibility = 'hidden'
-        iuw = 0
-        document.getElementById('blank').style.visibility = 'hidden'
-    }
-    else{
-        document.getElementById('upload-image-input-window').style.visibility = 'visible'
-        iuw=1
-        document.getElementById('blank').style.visibility = 'visible'
-    }
-}
+// document.getElementById('add-new').onclick = ()=>{
+//     if(neww){
+//         neww=0
+//         document.getElementById('add-new-child').style.visibility = 'hidden'
+//     }
+//     else{
+//         setTimeout(()=>{
+//             neww=1
+//             document.getElementById('add-new-child').style.visibility = 'visible'
+//         },50)
+//     }
+// }
+//
+// //here comes the windows for the above opertaion
+// document.getElementById('upload-file').onclick = ()=>{
+//     if(fuw) {
+//         document.getElementById('upload-file-input-window').style.visibility = 'hidden'
+//         fuw = 0
+//         document.getElementById('blank').style.visibility = 'hidden'
+//     }
+//     else{
+//         document.getElementById('upload-file-input-window').style.visibility = 'visible'
+//         fuw=1
+//         document.getElementById('blank').style.visibility = 'visible'
+//     }
+// }
+// document.getElementById('upload-image').onclick = ()=>{
+//     if(iuw) {
+//         document.getElementById('upload-image-input-window').style.visibility = 'hidden'
+//         iuw = 0
+//         document.getElementById('blank').style.visibility = 'hidden'
+//     }
+//     else{
+//         document.getElementById('upload-image-input-window').style.visibility = 'visible'
+//         iuw=1
+//         document.getElementById('blank').style.visibility = 'visible'
+//     }
+// }
 document.getElementById('cancel-file').onclick= ()=>{
     document.getElementById('upload-file-input-window').style.visibility = 'hidden'
     fuw = 0
@@ -1299,7 +1299,6 @@ document.getElementById('cancel-image').onclick= ()=>{
         document.getElementById('images-selected').removeChild(document.getElementById(imagesSelectedkeys[i]).parentElement)
     imagesSelected = {}
 }
-//fsdhfjsdnfdksfkdsjnfk
 document.getElementById('add-file').onclick = ()=> {
     document.getElementById('file-input').click()
 }
@@ -1487,19 +1486,19 @@ document.getElementById('image-upload-confirm').onclick = ()=>{
 }
 
 
-document.getElementById('create-folder').onclick = ()=>{
-    document.getElementById('create-folder-window').style.visibility = 'visible'
-    document.getElementById('blank').style.visibility = 'visible'
-    document.getElementById('folder-name').focus()
-    cfoldwin=1
-}
-document.getElementById('cancel-folder-confirm').onclick = ()=>{
-    document.getElementById('create-folder-window').style.visibility = 'hidden'
-    document.getElementById('blank').style.visibility = 'hidden'
-    document.getElementById('folder-name').value = ''
-    cfoldwin=0
-
-}
+// document.getElementById('create-folder').onclick = ()=>{
+//     document.getElementById('create-folder-window').style.visibility = 'visible'
+//     document.getElementById('blank').style.visibility = 'visible'
+//     document.getElementById('folder-name').focus()
+//     cfoldwin=1
+// }
+// document.getElementById('cancel-folder-confirm').onclick = ()=>{
+//     document.getElementById('create-folder-window').style.visibility = 'hidden'
+//     document.getElementById('blank').style.visibility = 'hidden'
+//     document.getElementById('folder-name').value = ''
+//     cfoldwin=0
+//
+// }
 document.getElementById('create-folder-confirm').onclick = createFolder
 
 function createFolder(){
@@ -1529,14 +1528,14 @@ function createFolder(){
 
 }
 
-document.getElementById('create-file').onclick = ()=>{
-    document.getElementById('create-file-window').style.visibility ='visible'
-    cfw=1
-    document.getElementById('blank').style.visibility='visible'
-    if(currentselected){
-        document.getElementById(currentselected).click()
-    }
-}
+// document.getElementById('create-file').onclick = ()=>{
+//     document.getElementById('create-file-window').style.visibility ='visible'
+//     cfw=1
+//     document.getElementById('blank').style.visibility='visible'
+//     if(currentselected){
+//         document.getElementById(currentselected).click() // deselect the object
+//     }
+// }
 document.getElementById('save-file').onclick = ()=>{
     let data = document.getElementById('text-data').value
     let name = document.getElementById('unnamedfile').value
@@ -2107,474 +2106,472 @@ function showNav(){
 }
 
 
-function eventListeners(all=1,work=0) {
-    let key = Object.keys(rndids)
-    if(work != 0){
-        key = [work]
-    }
-    for(let i=0;i<key.length;i++) {
-        let id = key[i]
-        document.getElementById(id).onclick = (e) => {
-            if(selectfile==1){
-                addcheck(e.target.id)
-            }
-            else {
-                if (currentselected == 0) {
-                    currentselected = e.target.id
-                    if(view ==0)
-                        document.getElementById(currentselected).parentElement.style.opacity = '0.8'
-                    else {
-                        document.getElementById(currentselected).parentElement.style.backgroundColor = 'whitesmoke'
-                    }
-                } else if (currentselected == e.target.id) {
-                    if(view ==0)
-                        document.getElementById(currentselected).parentElement.style.opacity='1';
-                    else{
-                        document.getElementById(currentselected).parentElement.style.backgroundColor = 'white'
-                    }
-                    currentselected = 0
-
-                } else {
-                    if(view == 0)
-                        document.getElementById(currentselected).parentElement.style.opacity='1';
-                    else{
-                        document.getElementById(currentselected).parentElement.style.backgroundColor = 'white'
-                        document.getElementById(currentselected).parentElement.style.borderRadius='0'
-                    }
-                    currentselected = e.target.id
-                    if(view ==0 )
-                        document.getElementById(currentselected).parentElement.style.opacity='0.8';
-                    else{
-                        document.getElementById(currentselected).parentElement.style.backgroundColor = 'whitesmoke'
-                        document.getElementById(currentselected).parentElement.style.borderRadius='5px'
-                    }
-                }
-            }
-        }
-        document.getElementById(id).oncontextmenu = (e) => {
-            e.preventDefault()
-            if(selectfile==0 && masking!='Bin' && masking!='shared with me' && masking!='Favorites' && masking!='Files-Shared') {
-                if (currentselected == 0) {
-                    contextmenuopened = 1
-                    currentselected = e.target.id
-                    rndids[currentselected]['ow'] = 1
-                    document.getElementById('right-click-contextmenu').style.top = e.clientY.toString() + 'px'
-                    document.getElementById('right-click-contextmenu').style.left = e.clientX.toString() + 'px'
-                    document.getElementById('right-click-contextmenu').style.visibility = 'visible'
-                    if(view==0)
-                        document.getElementById(currentselected).parentElement.style.opacity = '0.8'
-                    else
-                        document.getElementById(currentselected).parentElement.style.backgroundColor = 'whitesmoke'
-                } else {
-                    contextmenuopened = 1
-                    if(view==0)
-                        document.getElementById(currentselected).parentElement.style.opacity = '1'
-                    else
-                        document.getElementById(currentselected).parentElement.style.backgroundColor ='white'
-                    rndids[currentselected]['ow'] = 0
-                    document.getElementById('right-click-contextmenu').style.top = e.clientY.toString() + 'px'
-                    document.getElementById('right-click-contextmenu').style.left = e.clientX.toString() + 'px'
-                    document.getElementById('right-click-contextmenu').style.visibility = 'visible';
-                    currentselected = e.target.id
-                    rndids[currentselected]['ow'] = 1
-                    if(view==0)
-                        document.getElementById(currentselected).parentElement.style.opacity = '0.8'
-                    else
-                        document.getElementById(currentselected).parentElement.style.backgroundColor = 'whitesmoke'
-                }
-            }
-        }
-        document.getElementById(id).ondblclick = (e) => {
-            if(selectfile ==0) {
-                document.getElementById('blank').style.visibility = 'visible'
-                let filename = rndids[e.target.id]['name']
-                if (rndids[e.target.id]['type'] == 'file') {
-                    filedblclicked = e.target.id
-                    let url = `http://localhost:4000/loadfile?filename=${filename}&token=${info[e.target.id]['owner']}&cwdstring=${cwdstring}`
-                    let xhr = new XMLHttpRequest()
-                    let data = ''
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4) {
-                            data = xhr.responseText
-                            data = data.replaceAll('\n', '<br>').replaceAll(' ', '&nbsp')
-                            document.getElementById('information').innerHTML = data
-                            document.getElementById('file-name-opened').innerText = filename
-                            document.getElementById('editor-window').style.visibility = 'visible'
-                            ew = 1
-                        }
-                    }
-                    xhr.open('GET', url)
-                    xhr.send()
-                } else if (rndids[e.target.id]['type'] == 'image') {
-                    document.getElementById('photo-data').src = info[e.target.id]['src']
-                    document.getElementById('photo-name').innerText = filename
-                    document.getElementById('photo-window').style.visibility = 'visible'
-                    pw = 1
-                }
-                else if(rndids[e.target.id]['type'] =='video'){
-                    document.getElementById('video-data').src = info[e.target.id]['src']
-                    document.getElementById('video-window').style.visibility = 'visible'
-                    document.getElementById('video-name').innerText = info[e.target.id]['name']
-                    document.getElementById('video-data').play()
-                    vw=1
-                }
-                else if(rndids[e.target.id]['type'] == 'audio'){
-                    document.getElementById('audio-data').src=info[e.target.id]['src']
-                    document.getElementById('audio-window').style.visibility = 'visible'
-                    document.getElementById('audio-name').innerText=info[e.target.id]['name']
-                    document.getElementById('audio-data').play()
-                    aw=1
-                }
-                else if (rndids[e.target.id]['type'] == 'dir') {
-                    if (masking == 'Favorites') {
-                        masking = 'Home'
-                        cwdstring = rndids[e.target.id]['cwd']
-                        browsehistory.push(rndids[e.target.id]['name'])
-                        cleanUp()
-                        getFiles()
-                    } else if (masking == 'Collections') {
-                        masking = 'Home'
-                        cwdstring = rndids[e.target.id]['cwd']
-                        browsehistory.push(rndids[e.target.id]['name'])
-                        cleanUp()
-                        getFiles()
-                    } else if (masking == 'Shared with me') {
-                        masking = 'Home'
-                        cwdstring = rndids[e.target.id]['cwd']
-                        browsehistory.push(rndids[e.target.id]['name'])
-                        cleanUp()
-                        getFiles()
-                    } else if(masking =='Bin'){
-                        masking = 'Home'
-                        cwdstring = rndids[e.target.id]['cwd']
-                        browsehistory.push(rndids[e.target.id]['name'])
-                        cleanUp()
-                        getFiles()
-                    }
-                    else {
-                        cwd = rndids[e.target.id]['name']
-                        cwdstring += ('-' + cwd)
-                        browsehistory.push(rndids[e.target.id]['name'])
-                        cleanUp()
-                        getFiles()
-                    }
-                    document.getElementById('blank').style.visibility = 'hidden'
-                }
-            }
-        }
-    }
-}
-
-function createImagelvlElement(obj){
-    let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
-    let ele= document.createElement('div')
-    let trans = document.createElement('div')
-    trans.className='trans'
-    trans.id=rnd
-    ele.className = `images`
-    let img = document.createElement('img')
-    img.src = obj['src']
-    img.className = 'src'
-    let name = document.createElement('label')
-    name.innerText = obj['name']
-    name.className = `file-lbl`
-    ele.append(img,name,trans)
-    document.getElementById('container-lvl2').appendChild(ele)
-    rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'image','cwd':obj['cwd']}
-    info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
-
-    return rnd
-
-}
-function createFilelvlElement(obj) {
-    let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
-
-    let ele= document.createElement('div')
-    let trans = document.createElement('div')
-
-    trans.className='trans'
-    ele.className = `files`
-
-    let encode = ['py','java','c','cpp','css','js','html','swift','rb','pynb','json','sass']
-    let img = document.createElement('label')
-    let i = document.createElement('i')
-    let splitted = obj['name'].split('.');
-    let split = splitted[splitted.length-1];
-    if(split == 'txt') i.className = `fal fa-file-alt `
-    else if(encode.includes(split)) i.className = `fal fa-file-code `
-    else if(['zip','rar'].includes(split)) i.className ='fal fa-file-archive '
-    else if(['mp3','m4a'].includes(split)) i.className = 'fal fa-file-audio '
-
-    img.style.display = 'flex'
-    img.style.justifyContent = 'center'
-    img.style.position='relative'
-    i.style.position='absolute'
-    i.style.top = '50%'
-    trans.id=rnd
-    i.style.transform = 'scale(4)'
-    i.style.color='#FF5252'
-    img.className='src'
-    img.appendChild(i)
-
-    let name = document.createElement('label')
-    name.innerText = obj['name']
-    name.className = `file-lbl`
-
-    //info.appendChild(name)
-    ele.append(img,name,trans)
-    document.getElementById('container-lvl2').appendChild(ele)
-    rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'file','cwd':obj['cwd']}
-    info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
-    return rnd
-
-}
-function createDirlvlElement(obj) {
-    let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
-    let ele= document.createElement('div')
-    let trans = document.createElement('div')
-
-    trans.className='trans'
-    ele.className = `files`
-
-    let img = document.createElement('label')
-    let i = document.createElement('i')
-    i.className = `fal fa-folder fa-4x`
-    img.style.display = 'flex'
-    img.style.justifyContent = 'center'
-    trans.id=rnd
-    i.style.color='#448AFF'
-    i.style.margin='auto'
-    img.appendChild(i)
-    img.className='src'
-    let name = document.createElement('label')
-    name.innerText = obj['name']
-    name.className = `file-lbl`
-    ele.append(img,name,trans)
-
-    document.getElementById('container-lvl2').appendChild(ele)
-    rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'dir','cwd':obj['cwd']}
-    info[rnd] = {'rnd':rnd,'name':obj['name'],'created':obj.created,'type':'dir','mimetype':'dir'}
-
-    return rnd
-}
-
-function createVideolvlElement(obj) {
-    let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
-    let ele= document.createElement('div')
-    let trans = document.createElement('div')
-
-    trans.className='trans'
-    ele.className = `files`
-
-    let img = document.createElement('label')
-    let i = document.createElement('i')
-    i.className = `fal fa-file-video fa-4x`
-    img.style.display = 'flex'
-    img.style.justifyContent = 'center'
-    trans.id=rnd
-    i.style.color='#FFAB00'
-    i.style.margin='auto'
-    img.appendChild(i)
-    img.className='src'
-    let name = document.createElement('label')
-    name.innerText = obj['name']
-    name.className = `file-lbl`
-    ele.append(img,name,trans)
-
-    document.getElementById('container-lvl2').appendChild(ele)
-    rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'video','cwd':obj['cwd']}
-    info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
-
-    return rnd
-}
-function createAudiolvlElement(obj) {
-    let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
-    let ele= document.createElement('div')
-    let trans = document.createElement('div')
-
-    trans.className='trans'
-    ele.className = `files`
-
-    let img = document.createElement('label')
-    let i = document.createElement('i')
-    i.className = `fal fa-file-audio fa-4x`
-    img.style.display = 'flex'
-    img.style.justifyContent = 'center'
-    trans.id=rnd
-    i.style.color='#E040FB'
-    i.style.margin='auto'
-    img.appendChild(i)
-    img.className='src'
-    let name = document.createElement('label')
-    name.innerText = obj['name']
-    name.className = `file-lbl`
-    ele.append(img,name,trans)
-
-    document.getElementById('container-lvl2').appendChild(ele)
-    rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'audio','cwd':obj['cwd']}
-    info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
-    return rnd
-}
-
-function createListlvlElement(obj){
-    let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
-    let ele= document.createElement('div')
-    let trans = document.createElement('div')
-    let icon = document.createElement('i');icon.style.margin = '0 10px 0 10px'
-    let name = document.createElement('label')
-    let date = document.createElement('label')
-    let size = document.createElement('label');
-    let type = document.createElement('label')
-
-    trans.className='translist'
-    ele.className = `list`
-    trans.id=rnd
-
-    name.innerText = obj['name']
-    name.className = `name`
-    name.style.gridArea = '1/1/1/2'
-
-    try {
-        date.innerText = obj['lastmod'].slice(0, 15)
-    }catch (e) {
-        date.innerText = obj['created'].slice(0, 15)
-    }
-    date.style.marginLeft='70px'
-    date.style.gridArea = '1/2/1/3'
-    ele.appendChild(date)
-    try {
-        let a, s = obj['size'].toString()
-        if (s.length > 6) {
-            a = (parseFloat(s) / 1000000).toString().slice(0, 4) + ' MB'
-        } else if (s.length >= 4)
-            a = (parseFloat(s) / 1000).toString().slice(0, 4) + ' kB'
-        else
-            a = s + ' b'
-        size.innerText = a
-        size.style.marginLeft = '60px'
-        size.style.gridArea = '1/3/1/4'
-        ele.appendChild(size)
-    }catch (e) {
-        
-    }
-    type.innerText = obj['mimetype']
-    //type.style.marginLeft='30px'
-    type.style.textAlign = 'center'
-    type.style.gridArea='1/4/1/4'
-    ele.appendChild(type)
-
-    ele.append(name,trans)
-    icon.style.color='#b4b4b3'
-    if(obj['type']=='image'){
-        icon.className = 'fal fa-image'
-        icon.style.color = '#E040FB'
-        rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'image','cwd':obj['cwd']}
-        info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
-
-    }
-    else if(obj['type'] == 'file'){
-        icon.className='fal fa-file'
-        icon.style.color = '#FF5252'
-        rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'file','cwd':obj['cwd']}
-        info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
-    }
-    else if(obj['type'] == 'video'){
-        icon.className='fal fa-file-video'
-        icon.style.color = '#FFAB00'
-        rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'video','cwd':obj['cwd']}
-        info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
-    }
-    else if(obj['type'] == 'audio'){
-        icon.className='fal fa-file-audio'
-        icon.style.color = '#FFFF00'
-        rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'audio','cwd':obj['cwd']}
-        info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
-    }
-    else{
-        icon.className = 'fal fa-folder'
-        icon.style.color = '#448AFF'
-        rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'dir','cwd':obj['cwd']}
-        info[rnd] = {'rnd':rnd,'name':obj['name'],'created':obj.created}
-    }
-    name.prepend(icon)
-    document.getElementById('container-lvl2').appendChild(ele)
-    return rnd
-}
-
+// function eventListeners(all=1,work=0) {
+//     let key = Object.keys(rndids)
+//     if(work != 0){
+//         key = [work]
+//     }
+//     for(let i=0;i<key.length;i++) {
+//         let id = key[i]
+//         document.getElementById(id).onclick = (e) => {
+//             if(selectfile==1){
+//                 addcheck(e.target.id)
+//             }
+//             else {
+//                 if (currentselected == 0) {
+//                     currentselected = e.target.id
+//                     if(view ==0)
+//                         document.getElementById(currentselected).parentElement.style.opacity = '0.8'
+//                     else {
+//                         document.getElementById(currentselected).parentElement.style.backgroundColor = 'whitesmoke'
+//                     }
+//                 } else if (currentselected == e.target.id) {
+//                     if(view ==0)
+//                         document.getElementById(currentselected).parentElement.style.opacity='1';
+//                     else{
+//                         document.getElementById(currentselected).parentElement.style.backgroundColor = 'white'
+//                     }
+//                     currentselected = 0
+//
+//                 } else {
+//                     if(view == 0)
+//                         document.getElementById(currentselected).parentElement.style.opacity='1';
+//                     else{
+//                         document.getElementById(currentselected).parentElement.style.backgroundColor = 'white'
+//                         document.getElementById(currentselected).parentElement.style.borderRadius='0'
+//                     }
+//                     currentselected = e.target.id
+//                     if(view ==0 )
+//                         document.getElementById(currentselected).parentElement.style.opacity='0.8';
+//                     else{
+//                         document.getElementById(currentselected).parentElement.style.backgroundColor = 'whitesmoke'
+//                         document.getElementById(currentselected).parentElement.style.borderRadius='5px'
+//                     }
+//                 }
+//             }
+//         }
+//         document.getElementById(id).oncontextmenu = (e) => {
+//             e.preventDefault()
+//             if(selectfile==0 && masking!='Bin' && masking!='shared with me' && masking!='Favorites' && masking!='Files-Shared') {
+//                 if (currentselected == 0) {
+//                     contextmenuopened = 1
+//                     currentselected = e.target.id
+//                     rndids[currentselected]['ow'] = 1
+//                     document.getElementById('right-click-contextmenu').style.top = e.clientY.toString() + 'px'
+//                     document.getElementById('right-click-contextmenu').style.left = e.clientX.toString() + 'px'
+//                     document.getElementById('right-click-contextmenu').style.visibility = 'visible'
+//                     if(view==0)
+//                         document.getElementById(currentselected).parentElement.style.opacity = '0.8'
+//                     else
+//                         document.getElementById(currentselected).parentElement.style.backgroundColor = 'whitesmoke'
+//                 } else {
+//                     contextmenuopened = 1
+//                     if(view==0)
+//                         document.getElementById(currentselected).parentElement.style.opacity = '1'
+//                     else
+//                         document.getElementById(currentselected).parentElement.style.backgroundColor ='white'
+//                     rndids[currentselected]['ow'] = 0
+//                     document.getElementById('right-click-contextmenu').style.top = e.clientY.toString() + 'px'
+//                     document.getElementById('right-click-contextmenu').style.left = e.clientX.toString() + 'px'
+//                     document.getElementById('right-click-contextmenu').style.visibility = 'visible';
+//                     currentselected = e.target.id
+//                     rndids[currentselected]['ow'] = 1
+//                     if(view==0)
+//                         document.getElementById(currentselected).parentElement.style.opacity = '0.8'
+//                     else
+//                         document.getElementById(currentselected).parentElement.style.backgroundColor = 'whitesmoke'
+//                 }
+//             }
+//         }
+//         document.getElementById(id).ondblclick = (e) => {
+//             if(selectfile ==0) {
+//                 document.getElementById('blank').style.visibility = 'visible'
+//                 let filename = rndids[e.target.id]['name']
+//                 if (rndids[e.target.id]['type'] == 'file') {
+//                     filedblclicked = e.target.id
+//                     let url = `http://localhost:4000/loadfile?filename=${filename}&token=${info[e.target.id]['owner']}&cwdstring=${cwdstring}`
+//                     let xhr = new XMLHttpRequest()
+//                     let data = ''
+//                     xhr.onreadystatechange = function () {
+//                         if (xhr.readyState == 4) {
+//                             data = xhr.responseText
+//                             data = data.replaceAll('\n', '<br>').replaceAll(' ', '&nbsp')
+//                             document.getElementById('information').innerHTML = data
+//                             document.getElementById('file-name-opened').innerText = filename
+//                             document.getElementById('editor-window').style.visibility = 'visible'
+//                             ew = 1
+//                         }
+//                     }
+//                     xhr.open('GET', url)
+//                     xhr.send()
+//                 } else if (rndids[e.target.id]['type'] == 'image') {
+//                     document.getElementById('photo-data').src = info[e.target.id]['src']
+//                     document.getElementById('photo-name').innerText = filename
+//                     document.getElementById('photo-window').style.visibility = 'visible'
+//                     pw = 1
+//                 }
+//                 else if(rndids[e.target.id]['type'] =='video'){
+//                     document.getElementById('video-data').src = info[e.target.id]['src']
+//                     document.getElementById('video-window').style.visibility = 'visible'
+//                     document.getElementById('video-name').innerText = info[e.target.id]['name']
+//                     document.getElementById('video-data').play()
+//                     vw=1
+//                 }
+//                 else if(rndids[e.target.id]['type'] == 'audio'){
+//                     document.getElementById('audio-data').src=info[e.target.id]['src']
+//                     document.getElementById('audio-window').style.visibility = 'visible'
+//                     document.getElementById('audio-name').innerText=info[e.target.id]['name']
+//                     document.getElementById('audio-data').play()
+//                     aw=1
+//                 }
+//                 else if (rndids[e.target.id]['type'] == 'dir') {
+//                     if (masking == 'Favorites') {
+//                         masking = 'Home'
+//                         cwdstring = rndids[e.target.id]['cwd']
+//                         browsehistory.push(rndids[e.target.id]['name'])
+//                         cleanUp()
+//                         getFiles()
+//                     } else if (masking == 'Collections') {
+//                         masking = 'Home'
+//                         cwdstring = rndids[e.target.id]['cwd']
+//                         browsehistory.push(rndids[e.target.id]['name'])
+//                         cleanUp()
+//                         getFiles()
+//                     } else if (masking == 'Shared with me') {
+//                         masking = 'Home'
+//                         cwdstring = rndids[e.target.id]['cwd']
+//                         browsehistory.push(rndids[e.target.id]['name'])
+//                         cleanUp()
+//                         getFiles()
+//                     } else if(masking =='Bin'){
+//                         masking = 'Home'
+//                         cwdstring = rndids[e.target.id]['cwd']
+//                         browsehistory.push(rndids[e.target.id]['name'])
+//                         cleanUp()
+//                         getFiles()
+//                     }
+//                     else {
+//                         cwd = rndids[e.target.id]['name']
+//                         cwdstring += ('-' + cwd)
+//                         browsehistory.push(rndids[e.target.id]['name'])
+//                         cleanUp()
+//                         getFiles()
+//                     }
+//                     document.getElementById('blank').style.visibility = 'hidden'
+//                 }
+//             }
+//         }
+//     }
+// }
+// function createImagelvlElement(obj){
+//     let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
+//     let ele= document.createElement('div')
+//     let trans = document.createElement('div')
+//     trans.className='trans'
+//     trans.id=rnd
+//     ele.className = `images`
+//     let img = document.createElement('img')
+//     img.src = obj['src']
+//     img.className = 'src'
+//     let name = document.createElement('label')
+//     name.innerText = obj['name']
+//     name.className = `file-lbl`
+//     ele.append(img,name,trans)
+//     document.getElementById('container-lvl2').appendChild(ele)
+//     rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'image','cwd':obj['cwd']}
+//     info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
+//
+//     return rnd
+//
+// }
+// function createFilelvlElement(obj) {
+//     let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
+//
+//     let ele= document.createElement('div')
+//     let trans = document.createElement('div')
+//
+//     trans.className='trans'
+//     ele.className = `files`
+//
+//     let encode = ['py','java','c','cpp','css','js','html','swift','rb','pynb','json','sass']
+//     let img = document.createElement('label')
+//     let i = document.createElement('i')
+//     let splitted = obj['name'].split('.');
+//     let split = splitted[splitted.length-1];
+//     if(split == 'txt') i.className = `fal fa-file-alt `
+//     else if(encode.includes(split)) i.className = `fal fa-file-code `
+//     else if(['zip','rar'].includes(split)) i.className ='fal fa-file-archive '
+//     else if(['mp3','m4a'].includes(split)) i.className = 'fal fa-file-audio '
+//
+//     img.style.display = 'flex'
+//     img.style.justifyContent = 'center'
+//     img.style.position='relative'
+//     i.style.position='absolute'
+//     i.style.top = '50%'
+//     trans.id=rnd
+//     i.style.transform = 'scale(4)'
+//     i.style.color='#FF5252'
+//     img.className='src'
+//     img.appendChild(i)
+//
+//     let name = document.createElement('label')
+//     name.innerText = obj['name']
+//     name.className = `file-lbl`
+//
+//     //info.appendChild(name)
+//     ele.append(img,name,trans)
+//     document.getElementById('container-lvl2').appendChild(ele)
+//     rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'file','cwd':obj['cwd']}
+//     info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
+//     return rnd
+//
+// }
+// function createDirlvlElement(obj) {
+//     let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
+//     let ele= document.createElement('div')
+//     let trans = document.createElement('div')
+//
+//     trans.className='trans'
+//     ele.className = `files`
+//
+//     let img = document.createElement('label')
+//     let i = document.createElement('i')
+//     i.className = `fal fa-folder fa-4x`
+//     img.style.display = 'flex'
+//     img.style.justifyContent = 'center'
+//     trans.id=rnd
+//     i.style.color='#448AFF'
+//     i.style.margin='auto'
+//     img.appendChild(i)
+//     img.className='src'
+//     let name = document.createElement('label')
+//     name.innerText = obj['name']
+//     name.className = `file-lbl`
+//     ele.append(img,name,trans)
+//
+//     document.getElementById('container-lvl2').appendChild(ele)
+//     rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'dir','cwd':obj['cwd']}
+//     info[rnd] = {'rnd':rnd,'name':obj['name'],'created':obj.created,'type':'dir','mimetype':'dir'}
+//
+//     return rnd
+// }
+//
+// function createVideolvlElement(obj) {
+//     let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
+//     let ele= document.createElement('div')
+//     let trans = document.createElement('div')
+//
+//     trans.className='trans'
+//     ele.className = `files`
+//
+//     let img = document.createElement('label')
+//     let i = document.createElement('i')
+//     i.className = `fal fa-file-video fa-4x`
+//     img.style.display = 'flex'
+//     img.style.justifyContent = 'center'
+//     trans.id=rnd
+//     i.style.color='#FFAB00'
+//     i.style.margin='auto'
+//     img.appendChild(i)
+//     img.className='src'
+//     let name = document.createElement('label')
+//     name.innerText = obj['name']
+//     name.className = `file-lbl`
+//     ele.append(img,name,trans)
+//
+//     document.getElementById('container-lvl2').appendChild(ele)
+//     rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'video','cwd':obj['cwd']}
+//     info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
+//
+//     return rnd
+// }
+// function createAudiolvlElement(obj) {
+//     let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
+//     let ele= document.createElement('div')
+//     let trans = document.createElement('div')
+//
+//     trans.className='trans'
+//     ele.className = `files`
+//
+//     let img = document.createElement('label')
+//     let i = document.createElement('i')
+//     i.className = `fal fa-file-audio fa-4x`
+//     img.style.display = 'flex'
+//     img.style.justifyContent = 'center'
+//     trans.id=rnd
+//     i.style.color='#E040FB'
+//     i.style.margin='auto'
+//     img.appendChild(i)
+//     img.className='src'
+//     let name = document.createElement('label')
+//     name.innerText = obj['name']
+//     name.className = `file-lbl`
+//     ele.append(img,name,trans)
+//
+//     document.getElementById('container-lvl2').appendChild(ele)
+//     rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'audio','cwd':obj['cwd']}
+//     info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
+//     return rnd
+// }
+//
+// function createListlvlElement(obj){
+//     let rnd = Math.floor(Math.random()*1000).toString()+'rnd'
+//     let ele= document.createElement('div')
+//     let trans = document.createElement('div')
+//     let icon = document.createElement('i');icon.style.margin = '0 10px 0 10px'
+//     let name = document.createElement('label')
+//     let date = document.createElement('label')
+//     let size = document.createElement('label');
+//     let type = document.createElement('label')
+//
+//     trans.className='translist'
+//     ele.className = `list`
+//     trans.id=rnd
+//
+//     name.innerText = obj['name']
+//     name.className = `name`
+//     name.style.gridArea = '1/1/1/2'
+//
+//     try {
+//         date.innerText = obj['lastmod'].slice(0, 15)
+//     }catch (e) {
+//         date.innerText = obj['created'].slice(0, 15)
+//     }
+//     date.style.marginLeft='70px'
+//     date.style.gridArea = '1/2/1/3'
+//     ele.appendChild(date)
+//     try {
+//         let a, s = obj['size'].toString()
+//         if (s.length > 6) {
+//             a = (parseFloat(s) / 1000000).toString().slice(0, 4) + ' MB'
+//         } else if (s.length >= 4)
+//             a = (parseFloat(s) / 1000).toString().slice(0, 4) + ' kB'
+//         else
+//             a = s + ' b'
+//         size.innerText = a
+//         size.style.marginLeft = '60px'
+//         size.style.gridArea = '1/3/1/4'
+//         ele.appendChild(size)
+//     }catch (e) {
+//
+//     }
+//     type.innerText = obj['mimetype']
+//     //type.style.marginLeft='30px'
+//     type.style.textAlign = 'center'
+//     type.style.gridArea='1/4/1/4'
+//     ele.appendChild(type)
+//
+//     ele.append(name,trans)
+//     icon.style.color='#b4b4b3'
+//     if(obj['type']=='image'){
+//         icon.className = 'fal fa-image'
+//         icon.style.color = '#E040FB'
+//         rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'image','cwd':obj['cwd']}
+//         info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
+//
+//     }
+//     else if(obj['type'] == 'file'){
+//         icon.className='fal fa-file'
+//         icon.style.color = '#FF5252'
+//         rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'file','cwd':obj['cwd']}
+//         info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
+//     }
+//     else if(obj['type'] == 'video'){
+//         icon.className='fal fa-file-video'
+//         icon.style.color = '#FFAB00'
+//         rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'video','cwd':obj['cwd']}
+//         info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
+//     }
+//     else if(obj['type'] == 'audio'){
+//         icon.className='fal fa-file-audio'
+//         icon.style.color = '#FFFF00'
+//         rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'audio','cwd':obj['cwd']}
+//         info[rnd] = {'rnd':rnd,'name':obj['name'],'type':obj['type'],'src':obj['src'],'size':obj['size'],'lastmod':obj['lastmod'],'mimetype':obj['mimetype'],'owner':obj['owner'],'cwd':obj['cwd']}
+//     }
+//     else{
+//         icon.className = 'fal fa-folder'
+//         icon.style.color = '#448AFF'
+//         rndids[rnd] = {'rnd':rnd,'ow':0,'name':obj['name'],'type':'dir','cwd':obj['cwd']}
+//         info[rnd] = {'rnd':rnd,'name':obj['name'],'created':obj.created}
+//     }
+//     name.prepend(icon)
+//     document.getElementById('container-lvl2').appendChild(ele)
+//     return rnd
+// }
 //this here is to retrieve files based on indiviusl response
-function getFavfiles(){
-    FavFilesRecieved={}
-    let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState == 4 && xhr.status == 200){
-            FavFilesRecieved = JSON.parse(this.response)
-            ShowFiles(FavFilesRecieved)
-            showremovefavicon()
-            eventListeners()
-            showNav()
-        }
-    }
-    xhr.open('GET', `http://localhost:4000/getfav?token=${userdetails['token']}`)
-    xhr.send()
-}
-
-function getsharefiles() {
-    let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-        if(xhr.readyState==4 && xhr.status==200){
-            ShareFilesRecieved = JSON.parse(this.response)
-            ShowFiles(ShareFilesRecieved)
-            eventListeners()
-            showNav()
-        }
-    }
-    xhr.open('GET',`http://localhost:4000/getsharefile?token=${userdetails['token']}&only=all`)
-    xhr.send()
-}
-function getCollecFiles() {
-    let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = ()=>{
-        if(xhr.readyState==4 && xhr.status == 200){
-            CollFilesRecieved = JSON.parse(xhr.response)
-            ShowFiles(CollFilesRecieved)
-            eventListeners()
-            showremovefromcol()
-            showNav()
-        }
-    }
-    xhr.open('GET',`http://localhost:4000/listcollection?token=${userdetails['token']}&cname=${curcolname}`)
-    xhr.send()
-}
-
-function getfilesshared() {
-    let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-        if(xhr.readyState==4 && xhr.status==200){
-            FileSharedRecieved=JSON.parse(this.response)
-            ShowFiles(FileSharedRecieved)
-            showStopSharingicon()
-            eventListeners()
-            showNav()
-        }
-    }
-    xhr.open('GET',`http://localhost:4000/getfilesshared?token=${userdetails['token']}`)
-    xhr.send()
-}
-
-function getBinFiles() {
-    let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-        if(xhr.readyState==4 && xhr.status==200){
-            BinFilesRecieved=JSON.parse(this.response)
-            ShowFiles(BinFilesRecieved)
-            eventListeners()
-            showNav()
-            showTrashIcon()
-        }
-    }
-    xhr.open('GET',`http://localhost:4000/listbinfiles?token=${userdetails['token']}&bin=1`)
-    xhr.send()
-}
+// function getFavfiles(){
+//     FavFilesRecieved={}
+//     let xhr = new XMLHttpRequest()
+//     xhr.onreadystatechange = function(){
+//         if(xhr.readyState == 4 && xhr.status == 200){
+//             FavFilesRecieved = JSON.parse(this.response)
+//             ShowFiles(FavFilesRecieved)
+//             showremovefavicon()
+//             eventListeners()
+//             showNav()
+//         }
+//     }
+//     xhr.open('GET', `http://localhost:4000/getfav?token=${userdetails['token']}`)
+//     xhr.send()
+// }
+//
+// function getsharefiles() {
+//     let xhr = new XMLHttpRequest()
+//     xhr.onreadystatechange = function () {
+//         if(xhr.readyState==4 && xhr.status==200){
+//             ShareFilesRecieved = JSON.parse(this.response)
+//             ShowFiles(ShareFilesRecieved)
+//             eventListeners()
+//             showNav()
+//         }
+//     }
+//     xhr.open('GET',`http://localhost:4000/getsharefile?token=${userdetails['token']}&only=all`)
+//     xhr.send()
+// }
+// function getCollecFiles() {
+//     let xhr = new XMLHttpRequest()
+//     xhr.onreadystatechange = ()=>{
+//         if(xhr.readyState==4 && xhr.status == 200){
+//             CollFilesRecieved = JSON.parse(xhr.response)
+//             ShowFiles(CollFilesRecieved)
+//             eventListeners()
+//             showremovefromcol()
+//             showNav()
+//         }
+//     }
+//     xhr.open('GET',`http://localhost:4000/listcollection?token=${userdetails['token']}&cname=${curcolname}`)
+//     xhr.send()
+// }
+//
+// function getfilesshared() {
+//     let xhr = new XMLHttpRequest()
+//     xhr.onreadystatechange = function () {
+//         if(xhr.readyState==4 && xhr.status==200){
+//             FileSharedRecieved=JSON.parse(this.response)
+//             ShowFiles(FileSharedRecieved)
+//             showStopSharingicon()
+//             eventListeners()
+//             showNav()
+//         }
+//     }
+//     xhr.open('GET',`http://localhost:4000/getfilesshared?token=${userdetails['token']}`)
+//     xhr.send()
+// }
+//
+// function getBinFiles() {
+//     let xhr = new XMLHttpRequest()
+//     xhr.onreadystatechange = function () {
+//         if(xhr.readyState==4 && xhr.status==200){
+//             BinFilesRecieved=JSON.parse(this.response)
+//             ShowFiles(BinFilesRecieved)
+//             eventListeners()
+//             showNav()
+//             showTrashIcon()
+//         }
+//     }
+//     xhr.open('GET',`http://localhost:4000/listbinfiles?token=${userdetails['token']}&bin=1`)
+//     xhr.send()
+// }
 function showTrashIcon() {
     let rndidskeys = Object.keys(rndids)
     for(let i=0;i<rndidskeys.length;i++){
@@ -2665,44 +2662,44 @@ function showStopSharingicon() {
     }
 }
 
-function showremovefavicon(){
-    let keys = Object.keys(rndids)
-    for(let i=0;i<keys.length;i++){
-        let ele = document.createElement('i')
-        ele.className = 'fal fa-minus cursor'
-        ele.style.margin = '10px 0 0 15px'
-        ele.style.color = '#AA00FF'
-        ele.style.transform  = 'scale(1.5)'
-        ele.id = keys[i]+'fav'
-        ele.onclick = (e)=>{
-            let id = e.target.id.slice(0,-3)
-            let xhr = new XMLHttpRequest()
-            xhr.onreadystatechange = function () {
-                if(xhr.readyState == 4){
-                    document.getElementById('container-lvl2').removeChild(document.getElementById(id).parentElement)
-                    displaypopup(`'${info[id]['name']}' removed from favorites`)
-                    delete rndids[id]
-                    delete info[id]
-                    delete rndlist[rndlist.indexOf(id)]
-                    if(Object.keys(rndids).length==0){
-                        let ele = document.createElement('label')
-                        ele.innerText = 'Nothing here'
-                        ele.style.fontSize='large'
-                        ele.id ='nothing'
-                        ele.style.margin ='auto'
-                        document.getElementById('container-lvl2').appendChild(ele)
-                    }
-                }
-            }
-            xhr.open('POST','http://localhost:4000/removefav')
-            xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
-            xhr.send(JSON.stringify({'token':userdetails['token'],'cwd':info[id]['cwd'],'name':info[id]['name']}))
-        }
-        document.getElementById(keys[i]).appendChild(ele)
-    }
-}
+// function showremovefavicon(){
+//     let keys = Object.keys(rndids)
+//     for(let i=0;i<keys.length;i++){
+//         let ele = document.createElement('i')
+//         ele.className = 'fal fa-minus cursor'
+//         ele.style.margin = '10px 0 0 15px'
+//         ele.style.color = '#AA00FF'
+//         ele.style.transform  = 'scale(1.5)'
+//         ele.id = keys[i]+'fav'
+//         ele.onclick = (e)=>{
+//             let id = e.target.id.slice(0,-3)
+//             let xhr = new XMLHttpRequest()
+//             xhr.onreadystatechange = function () {
+//                 if(xhr.readyState == 4){
+//                     document.getElementById('container-lvl2').removeChild(document.getElementById(id).parentElement)
+//                     displaypopup(`'${info[id]['name']}' removed from favorites`)
+//                     delete rndids[id]
+//                     delete info[id]
+//                     delete rndlist[rndlist.indexOf(id)]
+//                     if(Object.keys(rndids).length==0){
+//                         let ele = document.createElement('label')
+//                         ele.innerText = 'Nothing here'
+//                         ele.style.fontSize='large'
+//                         ele.id ='nothing'
+//                         ele.style.margin ='auto'
+//                         document.getElementById('container-lvl2').appendChild(ele)
+//                     }
+//                 }
+//             }
+//             xhr.open('POST','http://localhost:4000/removefav')
+//             xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8')
+//             xhr.send(JSON.stringify({'token':userdetails['token'],'cwd':info[id]['cwd'],'name':info[id]['name']}))
+//         }
+//         document.getElementById(keys[i]).appendChild(ele)
+//     }
+// }
 
-function  showremovefromcol() {
+function showremovefromcol() {
     let keys = Object.keys(rndids)
     for(let i=0;i<keys.length;i++){
         let ele = document.createElement('i')
@@ -2739,66 +2736,66 @@ function  showremovefromcol() {
     }
 }
 
-function getFiles() {
-    if(masking == 'Favorites'){
-        getFavfiles()
-        showremovefavicon()
-    }
-    else if(masking == 'collection')
-        getCollecFiles()
-    else if (masking=='Shared with me')
-        getsharefiles()
-    else if(masking=='Bin'){
-        getBinFiles()
-    }
-    else if(masking == 'Files-Shared')
-        getfilesshared()
-    else if(masking == 'Home') {
-        Filerecieved = {}
-        let xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                Filerecieved = JSON.parse(this.response)
-                console.log(Filerecieved)
-                ShowFiles(Filerecieved)
-                eventListeners()
-                showNav()
-            }
-        }
-        xhr.open('GET', `http://localhost:4000/listallfiles?token=${userdetails['token']}&cwd=${cwd}&cwdstring=${cwdstring}`)
-        xhr.send()
-    }
-}
+// function getFiles() {
+//     if(masking == 'Favorites'){
+//         getFavfiles()
+//         showremovefavicon()
+//     }
+//     else if(masking == 'collection')
+//         getCollecFiles()
+//     else if (masking=='Shared with me')
+//         getsharefiles()
+//     else if(masking=='Bin'){
+//         getBinFiles()
+//     }
+//     else if(masking == 'Files-Shared')
+//         getfilesshared()
+//     else if(masking == 'Home') {
+//         Filerecieved = {}
+//         let xhr = new XMLHttpRequest()
+//         xhr.onreadystatechange = function () {
+//             if (xhr.readyState === 4) {
+//                 Filerecieved = JSON.parse(this.response)
+//                 console.log(Filerecieved)
+//                 ShowFiles(Filerecieved)
+//                 eventListeners()
+//                 showNav()
+//             }
+//         }
+//         xhr.open('GET', `http://localhost:4000/listallfiles?token=${userdetails['token']}&cwd=${cwd}&cwdstring=${cwdstring}`)
+//         xhr.send()
+//     }
+// }
 //finally show the file
-function ShowFiles(object) {
-    if(Object.keys(object).length ==0){
-        let ele = document.createElement('label')
-        ele.innerText = 'Nothing here'
-        ele.style.fontSize='large'
-        ele.id ='nothing'
-        ele.style.margin ='auto'
-        document.getElementById('container-lvl2').appendChild(ele)
-        document.getElementById('list-view-header').style.visibility='hidden'
-    }
-    else {
-        for (let i of Object.keys(object)) {
-            let obj = object[i]
-            if (view == 1) {
-                document.getElementById('list-view-header').style.visibility='visible'
-                createListlvlElement(obj)
-            } else {
-                if (obj['type'] == 'image')
-                    createImagelvlElement(obj)
-                else if (obj['type'] == 'dir')
-                    createDirlvlElement(obj)
-                else if(obj['type'] == 'file')
-                    createFilelvlElement(obj)
-                else if(obj['type'] == 'video')
-                    createVideolvlElement(obj)
-                else if(obj['type'] =='audio')
-                    createAudiolvlElement(obj)
-            }
-        }
-    }
-    rndlist = Object.keys(rndids)
-}
+// function ShowFiles(object) {
+//     if(Object.keys(object).length ==0){
+//         let ele = document.createElement('label')
+//         ele.innerText = 'Nothing here'
+//         ele.style.fontSize='large'
+//         ele.id ='nothing'
+//         ele.style.margin ='auto'
+//         document.getElementById('container-lvl2').appendChild(ele)
+//         document.getElementById('list-view-header').style.visibility='hidden'
+//     }
+//     else {
+//         for (let i of Object.keys(object)) {
+//             let obj = object[i]
+//             if (view == 1) {
+//                 document.getElementById('list-view-header').style.visibility='visible'
+//                 createListlvlElement(obj)
+//             } else {
+//                 if (obj['type'] == 'image')
+//                     createImagelvlElement(obj)
+//                 else if (obj['type'] == 'dir')
+//                     createDirlvlElement(obj)
+//                 else if(obj['type'] == 'file')
+//                     createFilelvlElement(obj)
+//                 else if(obj['type'] == 'video')
+//                     createVideolvlElement(obj)
+//                 else if(obj['type'] =='audio')
+//                     createAudiolvlElement(obj)
+//             }
+//         }
+//     }
+//     rndlist = Object.keys(rndids)
+// }

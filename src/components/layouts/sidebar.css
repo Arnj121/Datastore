@@ -38,7 +38,6 @@
     z-index: 3;
     top: 100px;
     left: 120px;
-    visibility: hidden;
     box-shadow: 1px 1px 1px #c0c0bf;
     display: flex;
     background-color: white;
@@ -57,7 +56,6 @@
     cursor: pointer;
 }
 #collection-list{
-    display: none;
     margin-bottom: 20px;
 }
 #usercollec{

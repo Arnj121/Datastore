@@ -2,7 +2,7 @@ import React from "react";
 
 import './show_people.css'
 
-function ShowPeople(){
+function ShowPeople(props){
     return(
         <div id="show-added-people-window">
             <div id="people-added-window"></div>
@@ -14,7 +14,7 @@ function ShowPeople(){
                 <i className="fal fa-user-minus" style={{marginRight: "10px"}}></i>
                 Remove
             </label>
-            <label id="show-added-people-window-close" className="confirm-keys">close</label>
+            <label id="show-added-people-window-close" className="confirm-keys" onClick={()=>{props.data.setShowAddedPeople(!props.data.showAddedPeople)}}>close</label>
         </div>
     )
 }

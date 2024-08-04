@@ -1,7 +1,7 @@
 import React from "react";
 import './space_info.css'
 
-function SpaceInfo(){
+function SpaceInfo(props){
     return(
         <div id="space-info-window">
             <label style={{gridArea: "1/1/1/span 2",textAlign: "center",margin: "auto 0",fontSize: "larger"}}>Storage Analysis</label>
@@ -40,7 +40,7 @@ function SpaceInfo(){
                 </div>
             </div>
             <label className="cursor" style={{gridArea: "1/4/1/4",borderColor: "#4A148C",margin: "auto 10px auto auto"}}
-                   id="close-space-window">
+                   id="close-space-window" onClick={()=>{props.data.setSpaceInfo(!props.data.spaceInfo)}}>
                 <i className="fal fa-window-close fa-2x"></i>
             </label>
         </div>

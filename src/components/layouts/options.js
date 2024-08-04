@@ -3,9 +3,6 @@ import './options.css'
 
 function Options(props){
 
-    const [view,setView]=useState(false)
-
-    useEffect(()=>{},[view])
 
     useEffect(()=> {
         document.getElementById('image-filter').onclick = () => {
@@ -116,20 +113,20 @@ function Options(props){
             </div>
             <i className="fal fa-grip-lines-vertical fa-2x" style={{color: "#d1d1d0",margin: "5px 10px 0 10px"}}></i>
             <div id="universal">
-                <label id="select-file" className="filter-txt filter-obj">
+                <label id="select-file" className="filter-txt filter-obj" onClick={()=>{}}>
                     <i id="check" className="far fa-check-circle" style={{marginRight: "5px",color: "#ff4081"}}></i>
                     select
                 </label>
-                <label id="delete-all" className="filter-txt filter-obj">
+                <label id="delete-all" className="filter-txt filter-obj" onClick={()=>{}}>
                     <i className="fal fa-trash" style={{color:"#FF4081"}}></i>
                 </label>
             </div>
             <i className="fal fa-grip-lines-vertical fa-2x" style={{color: "#d1d1d0",margin: "5px 10px 0 10px"}}></i>
             <div id="view">
-                <label id="list-view" style={{color:"#d1d1d0",transform: "scale(1.5)"}} onClick={()=>{setView(true)}}>
+                <label id="list-view" style={{color:"#d1d1d0",transform: "scale(1.5)"}} onClick={()=>{props.data.setView(true)}}>
                     <i className="fal fa-th-list"></i>
                 </label>
-                <label id="gallery-view" style={{color: "#FF4081",transform: "scale(1.5)"}} onClick={()=>{setView(false)}}>
+                <label id="gallery-view" style={{color: "#FF4081",transform: "scale(1.5)"}} onClick={()=>{props.data.setView(false)}}>
                     <i className="fal fa-th"></i>
                 </label>
             </div>

@@ -10,7 +10,6 @@
     grid-template-rows: 9% 91%;
     grid-template-columns: 100%;
     box-shadow: 2px 2px 2px #c0c0bf;
-    visibility: hidden;
     border-radius: 5px;
 }
 .information-windows{
